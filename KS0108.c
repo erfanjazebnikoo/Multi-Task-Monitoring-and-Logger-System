@@ -16,7 +16,7 @@ void GLCD_Initalize(void)
 unsigned char i;
 GLCD_InitalizePorts();
 for(i = 0; i < 3; i++)
-  GLCD_WriteCommand((DISPLAY_ON_CMD | ON), i);
+	GLCD_WriteCommand((DISPLAY_ON_CMD | ON), i);
 }
 //-------------------------------------------------------------------------------------------------
 //
@@ -28,11 +28,11 @@ screen_x = x;
 screen_y = y;
 
 for(i = 0; i < KS0108_SCREEN_WIDTH/64; i++)
-  {
-  GLCD_WriteCommand(DISPLAY_SET_Y | 0,i);
-  GLCD_WriteCommand(DISPLAY_SET_X | y,i);
-  GLCD_WriteCommand(DISPLAY_START_LINE | 0,i);
-  }
+{
+  	GLCD_WriteCommand(DISPLAY_SET_Y | 0,i);
+ 	 GLCD_WriteCommand(DISPLAY_SET_X | y,i);
+  	GLCD_WriteCommand(DISPLAY_START_LINE | 0,i);
+}
 GLCD_WriteCommand(DISPLAY_SET_Y | (x % 64), (x / 64));
 GLCD_WriteCommand(DISPLAY_SET_X | y, (x / 64));
 }
@@ -43,11 +43,11 @@ void GLCD_ClearScreen(void)
 {
 unsigned char i, j;
 for(j = 0; j < KS0108_SCREEN_HEIGHT/8; j++)
-  {
-  GLCD_GoTo(0,j);
-  for(i = 0; i < KS0108_SCREEN_WIDTH; i++)
+{
+  	GLCD_GoTo(0,j);
+  	for(i = 0; i < KS0108_SCREEN_WIDTH; i++)
     GLCD_WriteData(0x00);
-  }
+}
 }
 //-------------------------------------------------------------------------------------------------
 //
@@ -57,7 +57,7 @@ void GLCD_WriteChar(char charToWrite)
 int i;
 charToWrite -= 32; 
 for(i = 0; i < 5; i++) 
-  GLCD_WriteData(GLCD_ReadByteFromROMMemory((char *)((int)font5x8 + (5 * charToWrite) + i))); 
+  	GLCD_WriteData(GLCD_ReadByteFromROMMemory((char *)((int)font5x8 + (5 * charToWrite) + i))); 
 GLCD_WriteData(0x00);
 }
 //-------------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ GLCD_WriteData(0x00);
 void GLCD_WriteString(char * stringToWrite)
 {
 while(*stringToWrite)
-  GLCD_WriteChar(*stringToWrite++);
+ 	 GLCD_WriteChar(*stringToWrite++);
 }
 //-------------------------------------------------------------------------------------------------
 //
@@ -85,11 +85,11 @@ void GLCD_Bitmap(char * bmp, unsigned char x, unsigned char y, unsigned char dx,
 {
 unsigned char i, j;
 for(j = 0; j < dy / 8; j++)
-  {
-  GLCD_GoTo(x,y + j);
-  for(i = 0; i < dx; i++) 
-    GLCD_WriteData(GLCD_ReadByteFromROMMemory(bmp++));
-  }
+{
+ 	 GLCD_GoTo(x,y + j);
+ 	 for(i = 0; i < dx; i++) 
+   		 GLCD_WriteData(GLCD_ReadByteFromROMMemory(bmp++));
+}
 }
 //-------------------------------------------------------------------------------------------------
 //

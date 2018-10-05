@@ -1,0 +1,84 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.24.2.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Erfan Jazeb Nikoo, Brainstorimics, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.24.1
+Toolchain Path:  C:\Keil\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 5 (build 528)
+Assembler:       Armasm.exe V5.06 update 5 (build 528)
+Linker/Locator:  ArmLink.exe V5.06 update 5 (build 528)
+Library Manager: ArmAr.exe V5.06 update 5 (build 528)
+Hex Converter:   FromElf.exe V5.06 update 5 (build 528)
+CPU DLL:         SARM.DLL V5.24.1
+Dialog DLL:      DARMP.DLL V1.53.0.0
+Target DLL:      Segger\JLTAgdi.dll V1.60.0.0
+Dialog DLL:      TARMP.DLL V1.53.0.0
+ 
+<h2>Project:</h2>
+D:\Project\Robocup\Middle Size\MRL\Electronic Group\Project\Monitoring System\Software\Github\Multi-Task-Monitoring-and-Logger-System\Monitoring.uvproj
+Project File Date:  10/05/2018
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil\ARM\ARMCC\Bin'
+Build target 'Monitornig'
+compiling KS0108.c...
+compiling KS0108-LPC.c...
+assembling LPC2300.s...
+compiling CAN.c...
+compiling Main.c...
+pic1_glcd.h(4): warning:  #14-D: extra text after expected end of preprocessing directive
+  #ifndef _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
+pic1_glcd.h(5): warning:  #2775-D: white space is required between the macro name "_D" and its replacement text
+  #define _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
+rgbled.h(13): warning:  #9-D: nested comment is not allowed
+  \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+Network.h(13): warning:  #9-D: nested comment is not allowed
+  \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+Main.c: 4 warnings, 0 errors
+compiling initialization.c...
+pic1_glcd.h(4): warning:  #14-D: extra text after expected end of preprocessing directive
+  #ifndef _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
+pic1_glcd.h(5): warning:  #2775-D: white space is required between the macro name "_D" and its replacement text
+  #define _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
+rgbled.h(13): warning:  #9-D: nested comment is not allowed
+  \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+Network.h(13): warning:  #9-D: nested comment is not allowed
+  \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+initialization.c: 4 warnings, 0 errors
+compiling Tab.c...
+pic1_glcd.h(4): warning:  #14-D: extra text after expected end of preprocessing directive
+  #ifndef _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
+pic1_glcd.h(5): warning:  #2775-D: white space is required between the macro name "_D" and its replacement text
+  #define _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
+rgbled.h(13): warning:  #9-D: nested comment is not allowed
+  \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+Network.h(13): warning:  #9-D: nested comment is not allowed
+  \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+Tab.c(16): warning:  #550-D: variable "LockNum"  was set but never used
+  static int LockNum;
+Tab.c: 5 warnings, 0 errors
+compiling spi_lpc23xx_v1_01.c...
+compiling Delay.c...
+compiling tc_ad7843_v1_00.c...
+compiling graphic.c...
+linking...
+.\Obj\Monitoring.axf: Error: L6218E: Undefined symbol Can_Rx (referred from main.o).
+.\Obj\Monitoring.axf: Error: L6218E: Undefined symbol Can_Tx (referred from main.o).
+.\Obj\Monitoring.axf: Error: L6218E: Undefined symbol Rx_Data (referred from tab.o).
+.\Obj\Monitoring.axf: Error: L6218E: Undefined symbol init_VIC (referred from initialization.o).
+.\Obj\Monitoring.axf: Error: L6218E: Undefined symbol install_irq (referred from initialization.o).
+Not enough information to list image symbols.
+Not enough information to list load addresses in the image map.
+Finished: 2 information, 0 warning and 5 error messages.
+".\Obj\Monitoring.axf" - 5 Error(s), 13 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>

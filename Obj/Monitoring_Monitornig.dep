@@ -1,0 +1,88 @@
+Dependencies for Project 'Monitoring', Target 'Monitornig': (DO NOT MODIFY !)
+F (.\LPC2300.s)(0x4D9099D4)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips--pd "__UVISION_VERSION SETA 524"--list .\list\lpc2300.lst --xref -o .\obj\lpc2300.o --depend .\obj\lpc2300.d)
+F (.\Main.c)(0x5BB77A78)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
+I (initialization.h)(0x5BB77AA2)
+I (CAN.h)(0x4A02D0B4)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x588BC28C)
+I (type.h)(0x4C59BBFA)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x588BC28C)
+I (delay.h)(0x4C3DBF8A)
+I (C:\Keil\ARM\ARMCC\include\ctype.h)(0x588BC28C)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x588BC28C)
+I (LPC23xx.h)(0x4A02D066)
+I (KS0108.h)(0x4D93299C)
+I (Tab.h)(0x5BB77A55)
+I (tc_ad7843_v1_00.h)(0x4D62BBAC)
+I (app_config.h)(0x4D653200)
+I (hw_blue_screen.h)(0x4D9329D4)
+I (spi_lpc23xx_v1_01.h)(0x4859235E)
+I (pic1_glcd.h)(0x5BB77B40)
+I (rgbled.h)(0x4D933BBE)
+I (Network.h)(0x4D948572)
+I (irq.h)(0x4C3C6FA6)
+I (C:\Keil\ARM\ARMCC\include\math.h)(0x588BC28C)
+F (.\Tab.c)(0x5BB77A6C)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\tab.o --omf_browse .\obj\tab.crf --depend .\obj\tab.d)
+I (Tab.h)(0x5BB77A55)
+I (initialization.h)(0x5BB77AA2)
+I (CAN.h)(0x4A02D0B4)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x588BC28C)
+I (type.h)(0x4C59BBFA)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x588BC28C)
+I (delay.h)(0x4C3DBF8A)
+I (C:\Keil\ARM\ARMCC\include\ctype.h)(0x588BC28C)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x588BC28C)
+I (LPC23xx.h)(0x4A02D066)
+I (KS0108.h)(0x4D93299C)
+I (tc_ad7843_v1_00.h)(0x4D62BBAC)
+I (app_config.h)(0x4D653200)
+I (hw_blue_screen.h)(0x4D9329D4)
+I (spi_lpc23xx_v1_01.h)(0x4859235E)
+I (pic1_glcd.h)(0x5BB77B40)
+I (rgbled.h)(0x4D933BBE)
+I (Network.h)(0x4D948572)
+I (irq.h)(0x4C3C6FA6)
+I (C:\Keil\ARM\ARMCC\include\math.h)(0x588BC28C)
+F (.\CAN.c)(0x4D9099E8)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\can.o --omf_browse .\obj\can.crf --depend .\obj\can.d)
+I (LPC23xx.H)(0x4A02D066)
+I (CAN.h)(0x4A02D0B4)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x588BC28C)
+F (.\initialization.c)(0x5BB77AE2)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\initialization.o --omf_browse .\obj\initialization.crf --depend .\obj\initialization.d)
+I (initialization.h)(0x5BB77AA2)
+I (CAN.h)(0x4A02D0B4)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x588BC28C)
+I (type.h)(0x4C59BBFA)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x588BC28C)
+I (delay.h)(0x4C3DBF8A)
+I (C:\Keil\ARM\ARMCC\include\ctype.h)(0x588BC28C)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x588BC28C)
+I (LPC23xx.h)(0x4A02D066)
+I (KS0108.h)(0x4D93299C)
+I (Tab.h)(0x5BB77A55)
+I (tc_ad7843_v1_00.h)(0x4D62BBAC)
+I (app_config.h)(0x4D653200)
+I (hw_blue_screen.h)(0x4D9329D4)
+I (spi_lpc23xx_v1_01.h)(0x4859235E)
+I (pic1_glcd.h)(0x5BB77B40)
+I (rgbled.h)(0x4D933BBE)
+I (Network.h)(0x4D948572)
+I (irq.h)(0x4C3C6FA6)
+I (C:\Keil\ARM\ARMCC\include\math.h)(0x588BC28C)
+F (.\KS0108.c)(0x4D932FA4)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\ks0108.o --omf_browse .\obj\ks0108.crf --depend .\obj\ks0108.d)
+I (KS0108.h)(0x4D93299C)
+I (font5x8.h)(0x4707B3F0)
+F (.\KS0108-LPC.c)(0x5BB77A84)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\ks0108-lpc.o --omf_browse .\obj\ks0108-lpc.crf --depend .\obj\ks0108-lpc.d)
+I (LPC23xx.h)(0x4A02D066)
+F (.\spi_lpc23xx_v1_01.c)(0x4D5A7E5E)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\spi_lpc23xx_v1_01.o --omf_browse .\obj\spi_lpc23xx_v1_01.crf --depend .\obj\spi_lpc23xx_v1_01.d)
+I (app_config.h)(0x4D653200)
+I (LPC23xx.H)(0x4A02D066)
+I (hw_blue_screen.h)(0x4D9329D4)
+I (spi_lpc23xx_v1_01.h)(0x4859235E)
+I (tc_ad7843_v1_00.h)(0x4D62BBAC)
+F (.\tc_ad7843_v1_00.c)(0x4D651614)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\tc_ad7843_v1_00.o --omf_browse .\obj\tc_ad7843_v1_00.crf --depend .\obj\tc_ad7843_v1_00.d)
+I (app_config.h)(0x4D653200)
+I (LPC23xx.H)(0x4A02D066)
+I (hw_blue_screen.h)(0x4D9329D4)
+I (spi_lpc23xx_v1_01.h)(0x4859235E)
+I (tc_ad7843_v1_00.h)(0x4D62BBAC)
+F (.\Delay.c)(0x4D68CAB8)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\delay.o --omf_browse .\obj\delay.crf --depend .\obj\delay.d)
+F (.\graphic.c)(0x47054766)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -IC:\Keil\ARM\RV31\INC-IC:\Keil\ARM\CMSIS\Include-IC:\Keil\ARM\INC\Philips-D__UVISION_VERSION="524"-o .\obj\graphic.o --omf_browse .\obj\graphic.crf --depend .\obj\graphic.d)

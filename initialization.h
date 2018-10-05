@@ -1,3 +1,12 @@
+/************************************************************************
+* Project : Multi Task Monitoring and Logger System
+* Version : V0.6
+* Date    : 03/30/2011
+* Author  : Erfan Jazeb Nikoo
+* Compiler: KEIL uVision V4.01
+* Chip type           : LPC2368 NXP ARM7
+* Clock frequency     : 12.000000 MHz
+************************************************************************/
 
 #ifndef _INITIALIZATION_H
 #define _INITIALIZATION_H
@@ -33,8 +42,8 @@
 #define Kicker_EN		0xCE
 #define Handeling_EN	0xEE
 #define Kicker_Pwr	5000	
-#define Handeling_Spd_CW	1500
-#define Handeling_Spd_CCW	-1500
+#define Handeling_Spd_CW	250
+#define Handeling_Spd_CCW	-250
 
 
 //////////////////////////// RGB LED /////////////////////////////////
@@ -73,12 +82,11 @@ void card_Init (void);
 void can_Init (void);
 void main_init(void);
 void RGBLED_init (void);
-int Touch_Lock(void);
-int Lock_Screen(int State);
-void Lock(int j);
-//void Tab_Interrupt(void) __irq ;
+int Button_Lock(void);
+void Lock(void);
 void CfgTabInterrupt (void);
 void Welcome(void);
 void FlagCounter(void) __irq;
+void Paint (void);
 
 #endif

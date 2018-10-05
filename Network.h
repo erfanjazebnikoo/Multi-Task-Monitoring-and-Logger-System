@@ -1,3 +1,13 @@
+/************************************************************************
+* Project : Multi Task Monitoring and Logger System
+* Version : V0.6
+* Date    : 03/30/2011
+* Author  : Erfan Jazeb Nikoo
+* Compiler: KEIL uVision V4.01
+* Chip type           : LPC2368 NXP ARM7
+* Clock frequency     : 12.000000 MHz
+************************************************************************/
+
 #ifndef _NETWORK_H
 #define _NETWORK_H
 
@@ -28,14 +38,14 @@ int BHL_Status;
 int BHR_Motor_Current;
 int BHR_Motor_RPM;
 int BHR_Status;
-int Input_Vol;
-int Cap_Vol;
+float Input_Vol;
+float Cap_Vol;
 int Shoot_Status;					 
 int Fuse_Status;
 int Kicker_Status;
-int BT48V_Cell1;
-int BT48V_Cell2;
-int BT48V;
+float BT48V_Cell1;
+float BT48V_Cell2;
+float BT48V;
 int IR1,IR2;
 int Vision_Reset;
 int General_Key;
