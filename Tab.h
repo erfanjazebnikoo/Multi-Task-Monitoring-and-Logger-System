@@ -2,7 +2,7 @@
 
 #ifndef _TAB_H
 #define _TAB_H
-
+ 
 
 ////////////////////// Struct ////////////////////////
 
@@ -95,12 +95,12 @@ void Power (int BT48V_Cell1 , int BT48V_Cell2 , int BT48V_Total , int BT24V ,
         	int IR1 , int IR2 , int Vision_Reset , int General_Key ,
 			int BT48_Curr , int BT24_Curr , int *Beep);
 
-void Multi_Tasking (void);
+void Multi_Tasking(int FlagInterrupt);
+int SendToCan(void);
 int Push_Touch (int x1,int x2,int y1,int y2);
 int Button(void);
 int Key_Read(void);
 void BackLight(int counter);
-void can_Send (int ID , int Data_Length , DATA *Data);
 
 
 #endif

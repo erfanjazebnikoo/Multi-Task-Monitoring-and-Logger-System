@@ -1,9 +1,8 @@
 #include "Tab.h"
 
 int counter = 0;
-DATA data;
-static char flagKCK;
-static char flagset;
+int Num;
+
 
  
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -362,8 +361,8 @@ int Push_Touch (int x1 , int x2 , int y1 , int y2){
 int Touch_X,Touch_Y;
 if(TCIsPenOn()){
 TCRead();
-	Touch_X = TCGetX()/(26.8)-12; 
-	Touch_Y = TCGetY()/(46.4)-12;	
+	Touch_X = TCGetX()/(26.6)-12; 
+	Touch_Y = TCGetY()/(46.2)-12;	
 }
 else{
 	Touch_X = 0;
@@ -381,16 +380,20 @@ return(0);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void Multi_Tasking (void){
-
+void Multi_Tasking (int FlagInterrupt)
+{
+int cnt;
 int m,n,p,beep;
-int Lock_State,i=0;
-int h;
+//int Lock_State,i=0;
+//int h;
 char a[20];
 static int k = 8;
 static int flag;
 unsigned int val_Rx = 0;
 unsigned int rxid;
+if (FlagInterrupt)
+{
+cnt = Num;
 
 if (CAN_RxRdy[0]) {                           /* rc message on CAN Controller #1 */
       CAN_RxRdy[0] = 0;
@@ -415,8 +418,8 @@ delay_ms(10);
 
 sprintf(a,"ID: %02d",rxid);
 
-	GLCD_GoTo(0,6);
-	GLCD_WriteString(a);
+//	GLCD_GoTo(0,6);
+//	GLCD_WriteString(a);
 
 
 if(k == 1)
@@ -483,179 +486,52 @@ else if (k == 5)
 else if (k == 6)
 {
  	if(counter == 3)
-		{
-			//flag=0;
-			data.D0 = Kicker_EN;
-			data.D1 = 0x00;
-			data.D2 = 0x00;
-			if (flagset)
-				{
-				data.D3 = 0x01;
-				flagset = 0;
-				}
-			else
-				{
-				data.D3 = 0x02;
-				flagset = 1;
-				}
-			RGBLED_ColorSET(1,Kck_TX_Color);
-			can_Send (Kicker_ID , 4 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,Kck_TX_Color);
-			delay_ms (1000);
-
-  		}
-
+		Num = KCK_ChS ;
 }
 
 else if (k == 7)
 {
  	if(counter == 3)
-		{
-			data.D0 = 0xDE;
-			if (flagKCK)
-				{
-				data.D1 = 0x01;
-				flagKCK = 0;
-				}
-			else
-				{
-				data.D1 = 0x00;
-				flagKCK = 1;
-				}
-			RGBLED_ColorSET(1,Kck_TX_Color);
-			can_Send (Kicker_ID , 2 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,Kck_TX_Color);
-			delay_ms (1000);
-  		}
+		Num = KCK_ED;	
 }
 
 else if(k == 14)
-	{
+{
 		if(counter == 4)
-		{
-	 		data.D0 = BEEP;
-			RGBLED_ColorSET(1,Pwr_TX_Color);
-			can_Send (Power_ID , 1 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,Pwr_TX_Color);
-	 		delay_ms (500);
-		}
-    
+			Num = PWR_BEEP;
+		    
 		if(counter == 3)
-		{
-	 		data.D0 = BEEP;
-			RGBLED_ColorSET(1,Pwr_TX_Color);
-			can_Send (Power_ID , 1 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,Pwr_TX_Color);
-	 		delay_ms (500);
-			RGBLED_ColorSET(1,Pwr_TX_Color);
-			can_Send (Power_ID , 1 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,Pwr_TX_Color);
-	 		delay_ms (500);
-			RGBLED_ColorSET(1,Pwr_TX_Color);
-			can_Send (Power_ID , 1 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,Pwr_TX_Color);
-	 		delay_ms (500);
-			data.D0 = Kicker_EN;
-			data.D1 = (char)(Kicker_Pwr >>8 & 0xFF);
-			data.D2 = (char)(Kicker_Pwr & 0xFF);
-			RGBLED_ColorSET(1,Kck_TX_Color);
-			can_Send (Kicker_ID , 3 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,Kck_TX_Color);
-			delay_ms (10);
-		}
+			Num = KCK_KCK;	
 
 		if(counter == 1)
-		{
-			data.D0 = Handeling_EN;
-			data.D1 = (char)(Handeling_Spd_CW >>8 & 0xFF);
-			data.D2 = (char)(Handeling_Spd_CW & 0xFF);
-			RGBLED_ColorSET(1,BHL_TX_Color);
-			can_Send (Handeling_ID , 5 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,BHL_TX_Color);
-			delay_ms (10);
-		}
+			Num = BHL_CW;
 
 		if(counter == 2)
-		{
-		   	data.D0 = Handeling_EN;
-			data.D3 = (char)(Handeling_Spd_CW >>8 & 0xFF);
-			data.D4 = (char)(Handeling_Spd_CW & 0xFF);
-			RGBLED_ColorSET(1,BHR_TX_Color);
-			can_Send (Handeling_ID , 5 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,BHR_TX_Color);
-			delay_ms (10);
-		}
+			Num = BHR_CW;
+
 		if(counter == 8)
 			Lock(1);
-		//GLCD_Initalize();
-	}
+}
 
 else if(k == 15)
-	{
+{
 
 		if(counter == 1)
-		{
-			data.D0 = Handeling_EN;
-			data.D1 = (char)(Handeling_Spd_CCW >>8 & 0xFF);
-			data.D2 = (char)(Handeling_Spd_CCW & 0xFF);
-			RGBLED_ColorSET(1,BHL_TX_Color);
-			can_Send (Handeling_ID , 5 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,BHL_TX_Color);
-			delay_ms (10);
-		}
+			Num = BHL_CCW;
 
 		if(counter == 2)
-		{
-		   	data.D0 = Handeling_EN;
-			data.D3 = (char)(Handeling_Spd_CCW >>8 & 0xFF);
-			data.D4 = (char)(Handeling_Spd_CCW & 0xFF);
-			RGBLED_ColorSET(1,BHR_TX_Color);
-			can_Send (Handeling_ID , 5 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,BHR_TX_Color);
-			delay_ms (10);
-		}
+			Num = BHR_CCW;		
 		
-   }
+}
 
 else if(k == 16)
-	{
-
+{
 		if(counter == 1)
-		{
-			data.D0 = Handeling_EN;
-			data.D1 = 0x00;
-			data.D2 = 0x00;
-			RGBLED_ColorSET(1,BHL_TX_Color);
-			can_Send (Handeling_ID , 5 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,BHL_TX_Color);
-			delay_ms (10);
-		}
+			Num = BHL_STP;
 
 		if(counter == 2)
-		{
-		   	data.D0 = Handeling_EN;
-			data.D3 = 0x00;
-			data.D4 = 0x00;
-			RGBLED_ColorSET(1,BHR_TX_Color);
-			can_Send (Handeling_ID , 5 , &data);
-			delay_ms(100);
-			RGBLED_ColorCLR(1,BHR_TX_Color);
-			delay_ms (10);
-		}
-		
-   }
+			Num = BHR_STP;	
+}
 
 //sprintf(k2,"K: %01d C: %01d",k,counter);
 //GLCD_GoTo(0,6);
@@ -663,7 +539,17 @@ else if(k == 16)
 
 k = Key_Read();
 
+if (cnt == Num)
+Num = 0;
 }
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+
+int SendToCan(void)
+{
+ return Num;         
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 
 int Button (void)
@@ -826,31 +712,5 @@ Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
 
 //////////////////////////////////////////////////////////////////////////
 
-void can_Send (int ID , int Data_Length , DATA *Data) 
-{
 
-	int j;
-	CAN_TxMsg[1].id = ID;                  
-  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-  	CAN_TxMsg[1].len = Data_Length;
-  	CAN_TxMsg[1].format = STANDARD_FORMAT;
-  	CAN_TxMsg[1].type = DATA_FRAME;
-	 
-    if (CAN_TxRdy[1]) 
-	{                          
-    	CAN_TxRdy[1] = 0;
-		CAN_TxMsg[1].data[0] = Data->D0;
-		CAN_TxMsg[1].data[1] = Data->D1;
-		CAN_TxMsg[1].data[2] = Data->D2;
-		CAN_TxMsg[1].data[3] = Data->D3;
-		CAN_TxMsg[1].data[4] = Data->D4;
-		CAN_TxMsg[1].data[5] = Data->D5;
-		CAN_TxMsg[1].data[6] = Data->D6;
-		CAN_TxMsg[1].data[7] = Data->D7;
-      	CAN_wrMsg (2, &CAN_TxMsg[1]);           
-	}
-    delay_ms (10);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
 

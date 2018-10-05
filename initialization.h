@@ -17,10 +17,10 @@
 #include "Tab.h"
 #include "tc_ad7843_v1_00.h"
 #include "app_config.h"
-//#include "pic1_glcd.h"
-#include "mrl_glcd.h"
+#include "pic1_glcd.h"
 #include "rgbled.h"
-
+#include "Network.h"
+#include "irq.h"
 #include <math.h>                               /* LPC1766 CAN adaption layer */
 //#ifdef RT_AGENT
 //#include "RT_Agent.h"                           /* Real-Time Agent definitions */
@@ -36,7 +36,6 @@
 #define Handeling_Spd_CW	1500
 #define Handeling_Spd_CCW	-1500
 
-
 #endif
 
 //////////////////////////// RGB LED /////////////////////////////////
@@ -50,6 +49,9 @@
 #define RGBLED2_B	21
 #define RGBLED2_G	22
 #define RGBLED2_R	23
+
+
+#define PCLK            24000000//HZ
 
 ////////////////////// GLCD Back Light /////////////////////////////////
 
@@ -73,3 +75,7 @@ void RGBLED_init (void);
 int Touch_Lock(void);
 int Lock_Screen(int State);
 void Lock(int j);
+void Tab_Interrupt(void) __irq ;
+void CfgTabInterrupt (void);
+int Welcome(void);
+

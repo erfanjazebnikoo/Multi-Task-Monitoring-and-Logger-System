@@ -3,6 +3,7 @@
 int z=0;
 static int key =1;
 
+
 //////////////////////////////////////////////////////////////////////////////
 
 void IO_Init (void) {
@@ -63,7 +64,7 @@ void can_Init (void) {
 
   CAN_setup (1);                                  /* setup CAN Controller #1 */
   CAN_setup (2);                                  /* setup CAN Controller #2 */
- CAN_wrFilter (1, 0x30, STANDARD_FORMAT);          /* Enable reception of messages */
+  CAN_wrFilter (1, 0x30, STANDARD_FORMAT);          /* Enable reception of messages */
 
   CAN_start (1);                                  /* start CAN Controller #2 */
   CAN_start (2);                                  /* start CAN Controller #2 */
@@ -145,7 +146,6 @@ return 10;
 /////////////////////////////////////////////////////////////////////////////////
 void Lock(int j){
 int Lock_State;
-
 Lock_State = Lock_Screen(j);
 if(Lock_State==10){
 if(z==0){
@@ -164,30 +164,75 @@ GLCD_WriteString("| Monitoring System |");
 }
 else if(Lock_State==0){
 z=0;
-Multi_Tasking();
+Multi_Tasking(1);
 }
 
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+void CfgTabInterrupt (void)
+{
+//Timer 0 Config
+T0MR0 	= PCLK / 10; //10ms
+T0TCR  |= 0x01;
+T0CTCR |= 0x00;
+T0MCR  |= ((1 << 0)|(1 << 1));
+//Timer 1 Config
+T1MR0 	= PCLK / 100; //1ms
+T1TCR  |= 0x01;
+T1CTCR |= 0x00;
+T1MCR  |= ((1 << 0)|(1 << 1));
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+void CfgInterrupts (void)
+{
+install_irq( TIMER0_INT  , (void *)Tab_Interrupt , 1);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+int Welcome (void)
+{
+	GLCD_Bitmap(my_pic,1,0,126,64);
+	GLCD_GoTo(0,6);
+	GLCD_WriteString("Multi-Task-Monitoring");
+	GLCD_GoTo(0,7);
+	GLCD_WriteString("  and-Logger-System  ");
+	delay_ms(1500);
+	GLCD_GoTo(0,6);
+	GLCD_WriteString("  Erfan Jazeb Nikoo  ");
+	GLCD_GoTo(0,7);
+	GLCD_WriteString("    2010 - 2011      ");
+	delay_ms(1500);
+	GLCD_ClearScreen();
+	return 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
 void main_init (void) {
-int i;
+
+CfgTabInterrupt	();
+init_VIC		();
+CfgInterrupts 	();
 
 IO_Init();
-GLCD_Initalize();
-RGBLED_init();
-
+GLCD_Initalize	();
+RGBLED_init		();
 
 #ifdef RT_AGENT
   RTA_Init();                                     /* Initialize Real-Time Agent  */
 #endif
   //card_Init ();
-  can_Init ();
+can_Init 		();
 
 Setb(TC_CS_PRTS,TC_CS_PIN);
 
-TCInit();
-GLCD_Initalize();
+TCInit			();
+GLCD_Initalize	();
 delay_ms(10);
 }

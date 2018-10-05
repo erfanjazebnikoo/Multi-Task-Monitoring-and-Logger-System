@@ -8,6 +8,7 @@ int x,y,i=0;
 int j=0;
 int Touch_X,Touch_Y;
 int Lock_State;
+ int InterruptFlag = 0; 
 
 
 //int m,n,p,beep;
@@ -34,29 +35,27 @@ void Hex_Str (unsigned char hex, char *str) {
   *str++ = hex_chars[hex & 0xF];
 }
 
+/////////////////////////////////////////////////////////////////////////////////
+void Tab_Interrupt(void) __irq {
+
+Multi_Tasking(InterruptFlag);
+T0IR = 0x01;
+VICVectAddr = 0;		/* Acknowledge Interrupt */
+
+
+}
+
 /*----------------------------------------------------------------------------
  *        Main: 
  *---------------------------------------------------------------------------*/
 int main (void) {
-char k[30],z[30];
+//char k[30],z[30];
+int Num;
 main_init();
 
-
 GLCD_ClearScreen();
 
-
-GLCD_Bitmap(my_pic,1,0,126,64);
-GLCD_GoTo(0,6);
-GLCD_WriteString("Multi-Task-Monitoring");
-GLCD_GoTo(0,7);
-GLCD_WriteString("  and-Logger-System  ");
-delay_ms(1500);
-GLCD_GoTo(0,6);
-GLCD_WriteString("  Erfan Jazeb Nikoo  ");
-GLCD_GoTo(0,7);
-GLCD_WriteString("    2010 - 2011      ");
-delay_ms(1500);
-GLCD_ClearScreen();
+InterruptFlag = Welcome();
 while(1){
 
 
@@ -131,14 +130,8 @@ while(1){
 
 Lock(0);
 
- 
-		
 
-Multi_Tasking();
-
-
-
-
+Can_Tx	(SendToCan());
 
 
 
