@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.8
-* Date    : 05/12/2011
+* Version : V0.9 - MMC
+* Date    : 05/19/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -639,6 +639,7 @@ if(counter == 3)
 	if (CounterFlag>300)
 	{	
 		Kicker (Rx_Data.Input_Vol,Rx_Data.Cap_Vol,Rx_Data.Shoot_Status,Rx_Data.Fuse_Status,Rx_Data.Kicker_Status);
+		Logging();
 		CounterFlag = 0;
 	}         
 } 
@@ -648,13 +649,14 @@ if(counter == 4)
 	{
 		Power (Rx_Data.BT48V_Cell1,Rx_Data.BT48V_Cell2,Rx_Data.BT48V,Rx_Data.Input_Vol,
 		Rx_Data.IR1,Rx_Data.IR2,Rx_Data.Vision_Reset,Rx_Data.General_Key,0,0);
+		Logging();
 		CounterFlag = 0;
 	}
 }
 if(counter == 8)
 {
 
-	if (CounterFlag>300)
+	if (CounterFlag>500)
 	{
 		Main_Page(Rx_Data.BT48V_Cell1,Rx_Data.BT48V_Cell2,Rx_Data.BT48V,Rx_Data.Input_Vol,0,0);
 		if (FIO2PIN & (1<<0))
@@ -671,10 +673,11 @@ if(counter == 8)
 		GLCD_WriteString(clock);
 		GLCD_GoTo(0,5);
 		GLCD_WriteString(date);
-	
+		Logging();
 		CounterFlag = 0;
 	}
-}        
+} 
+       
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

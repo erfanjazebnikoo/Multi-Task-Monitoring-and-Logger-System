@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.8
-* Date    : 05/12/2011
+* Version : V0.9 - MMC
+* Date    : 05/19/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -58,12 +58,12 @@ delay_ms(100);
 
 //////////////////////////////////////////////////////////////////////////////
 
-//void card_Init (void) {
-//   U32 i; 
-//
-// while (finit() != 0)
-//		for(i=0;i<=0x00FFFFFF;i++);
-// }
+void card_Init (void) {
+   U32 i; 
+
+ while (finit() != 0)
+		for(i=0;i<=0x00FFFFFF;i++);
+ }
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -259,14 +259,14 @@ IO_Init();
 GLCD_Initalize	();
 GLCD_ClearScreen();
 RGBLED_init		();
-
-//#ifdef RT_AGENT
-//  RTA_Init();                                     /* Initialize Real-Time Agent  */
-//#endif
-
-//card_Init ();
 can_Init 		();
 Setb(TC_CS_PRTS,TC_CS_PIN);
 TCInit			();
+
+#ifdef RT_AGENT
+  RTA_Init();                                     /* Initialize Real-Time Agent  */
+#endif
+
+card_Init ();
 
 }

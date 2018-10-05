@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.8
-* Date    : 05/12/2011
+* Version : V0.9 - MMC
+* Date    : 05/19/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -12,11 +12,6 @@
 
 char hex_chars[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 int CounterFlag = 0;
-FILE *f;
-BOOL append=0;
-char Temp[40];
-U32 TimeTemp;
-char fname[40];
 char clock[30],date[30];
 int year = 0;
 int month = 0;
@@ -25,12 +20,13 @@ int hour = 0;
 int min = 0;
 int sec = 0;
 
+
 /*------------------------------------------------------------------------------
   convert one byte to string in hexadecimal notation
  *------------------------------------------------------------------------------*/
 void Hex_Str (unsigned char hex, char *str) {
-  *str++ = '0';
-  *str++ = 'x';
+//  *str++ = '0';
+//  *str++ = 'x';
   *str++ = hex_chars[hex >>  4];
   *str++ = hex_chars[hex & 0xF];
 }
@@ -76,36 +72,19 @@ int main (void) {
 
 char counter[30];
 
+
 main_init();
 GLCD_ClearScreen();						
 Welcome();
+//sprintf(fname,"%02d_%02d_%02d.txt",hour,min,sec);
+//    f = fopen (fname,append ? "a" : "w");
+//	temp = sec;
+//	fclose(f);
 for(;;){
-
-//GLCD_GoTo(0,0);
-//GLCD_WriteString("Clock Test");
-
-//sprintf(counter,"%10d",CounterFlag);
-//
-//GLCD_GoTo(0,1);
-//GLCD_WriteString(counter);
-
-//if (CounterFlag>1000)
-//{
-//GLCD_ClearScreen();
-//GLCD_GoTo(0,0);
-//GLCD_WriteString("Clock and Date Test:");
-//GLCD_GoTo(0,2);							  
-//GLCD_WriteString(clock);
-//GLCD_GoTo(0,3);
-//GLCD_WriteString(date);
-//CounterFlag = 0;
-//}
-
-
+	
 	Can_Rx();
 	Multi_Tasking();
 	Can_Tx (SendToCan());
-
 
  }
 }

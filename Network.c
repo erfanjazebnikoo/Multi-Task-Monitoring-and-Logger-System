@@ -19,6 +19,7 @@ DATA data;
 static char flagKCK;
 static char flagset,FFFlag =0;
 Rx_Var Rx_Data;
+char RxID;
 
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////CAN Transmitter//////////////////////////////////
@@ -211,7 +212,6 @@ delay_ms (10);
 void Can_Rx (void)
 {
 static char flagK,flagP1,flagP2,FFlag;
-char RxID;
 char data_rx[8];
 int i;
 
@@ -238,11 +238,13 @@ if (RxID == Kicker_Rx_ID)
 			flagK = 1;	
 			RGBLED_ColorCLR(2,Kck_RX_Color);	
 		}
+	Rx_Data.Rx_Data0 = data_rx[0];
 	GLCD_Initalize();
 	}
 	else if(data_rx[0] == 0xAF)
 	{				
-		Rx_Data.Cap_Vol = (data_rx[1] <<8) + data_rx[2];      
+		Rx_Data.Rx_Data0 = data_rx[0];
+		Rx_Data.Cap_Vol = (data_rx[1] <<8) + data_rx[2]; 
 		Rx_Data.Input_Vol = data_rx[3];
 		Rx_Data.Kicker_Status = data_rx[4];
 		Rx_Data.Shoot_Status = data_rx[5];
@@ -286,9 +288,10 @@ else if (RxID == Power_Rx_ID1)
 {
 	if(data_rx[0] == 0x12)
 	{		
+		Rx_Data.Rx_Data0 = data_rx[0];
 		Rx_Data.BT48V_Cell1 = (data_rx[1] <<8) + data_rx[2];
 		Rx_Data.BT48V_Cell2 = (data_rx[3] <<8) + data_rx[4];
-		Rx_Data.BT48V = (data_rx[5] <<8) + data_rx[6];      
+		Rx_Data.BT48V = (data_rx[5] <<8) + data_rx[6];
 		if(FFFlag == 0)
 		{
 			if (flagP1)
@@ -309,6 +312,7 @@ else if (RxID == Power_Rx_ID2)
 {
 	if(data_rx[0] == 0x15 )
 	{	
+		Rx_Data.Rx_Data0 = data_rx[0];
 		Rx_Data.General_Key = data_rx[1];
 		Rx_Data.Vision_Reset = data_rx[2];
 		Rx_Data.IR1 = data_rx[3];      
