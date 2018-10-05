@@ -26,17 +26,16 @@
 //#include "RT_Agent.h"                           /* Real-Time Agent definitions */
 //#endif
 
-#define Power_ID		0x23
+#define Power_ID		0x20
 #define Kicker_ID		0x30
 #define Handeling_ID	0x40
 #define BEEP 			0x18
 #define Kicker_EN		0xCE
 #define Handeling_EN	0xEE
-#define Kicker_Pwr	5000
+#define Kicker_Pwr	5000	
 #define Handeling_Spd_CW	1500
 #define Handeling_Spd_CCW	-1500
 
-#endif
 
 //////////////////////////// RGB LED /////////////////////////////////
 
@@ -51,7 +50,7 @@
 #define RGBLED2_R	23
 
 
-#define PCLK            24000000//HZ
+#define PCLK            18000000//HZ
 
 ////////////////////// GLCD Back Light /////////////////////////////////
 
@@ -67,6 +66,8 @@
 #define Clrb(FIOnCLR,bitnum)		FIOnCLR = 1 << bitnum
 #define Rdb(FIOnPIN,bitnum)			FIOnPIN & 1 << bitnum
 
+extern int CounterFlag;
+
 void IO_Init (void);
 void card_Init (void);
 void can_Init (void);
@@ -75,7 +76,9 @@ void RGBLED_init (void);
 int Touch_Lock(void);
 int Lock_Screen(int State);
 void Lock(int j);
-void Tab_Interrupt(void) __irq ;
+//void Tab_Interrupt(void) __irq ;
 void CfgTabInterrupt (void);
-int Welcome(void);
+void Welcome(void);
+void FlagCounter(void) __irq;
 
+#endif

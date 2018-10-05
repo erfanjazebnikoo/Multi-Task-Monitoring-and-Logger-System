@@ -64,7 +64,7 @@ void can_Init (void) {
 
   CAN_setup (1);                                  /* setup CAN Controller #1 */
   CAN_setup (2);                                  /* setup CAN Controller #2 */
-  CAN_wrFilter (1, 0x30, STANDARD_FORMAT);          /* Enable reception of messages */
+ // CAN_wrFilter (1, 0x30, STANDARD_FORMAT);          /* Enable reception of messages */
 
   CAN_start (1);                                  /* start CAN Controller #2 */
   CAN_start (2);                                  /* start CAN Controller #2 */
@@ -113,17 +113,18 @@ int Touch_X,Touch_Y;
 int Lock_State,j=0;
 if(State == 0)
 {
-key = Touch_Lock();
+	key = Touch_Lock();
 
-if(Touch_Lock()>1)
-Lock_State=key;
+	if(Touch_Lock()>1)
+		Lock_State=key;
 
-if(TCIsPenOn()){
-TCRead();
+	if(TCIsPenOn()){
+		TCRead();
 	Touch_X = TCGetX()/(26.8)-12; 
 	Touch_Y = TCGetY()/(46.4)-12;	
-}
-else{
+	}
+else
+{
 	Touch_X = 0;
 	Touch_Y = 0;
 }
@@ -139,7 +140,7 @@ if(0<Touch_X && Touch_X<37){
 }
 return Lock_State;
 }
-else if (State == 1)
+if (State == 1)
 return 10;
 }
 
@@ -164,7 +165,7 @@ GLCD_WriteString("| Monitoring System |");
 }
 else if(Lock_State==0){
 z=0;
-Multi_Tasking(1);
+Multi_Tasking();
 }
 
 }
@@ -175,12 +176,12 @@ Multi_Tasking(1);
 void CfgTabInterrupt (void)
 {
 //Timer 0 Config
-T0MR0 	= PCLK / 10; //10ms
+T0MR0 	= PCLK / 10; //100ms
 T0TCR  |= 0x01;
 T0CTCR |= 0x00;
 T0MCR  |= ((1 << 0)|(1 << 1));
 //Timer 1 Config
-T1MR0 	= PCLK / 100; //1ms
+T1MR0 	= PCLK / 1000; //1ms
 T1TCR  |= 0x01;
 T1CTCR |= 0x00;
 T1MCR  |= ((1 << 0)|(1 << 1));
@@ -190,14 +191,15 @@ T1MCR  |= ((1 << 0)|(1 << 1));
 
 void CfgInterrupts (void)
 {
-install_irq( TIMER0_INT  , (void *)Tab_Interrupt , 1);
+//install_irq( TIMER0_INT  , (void *)Tab_Interrupt , 2);
+install_irq( TIMER1_INT  , (void *)FlagCounter , 1);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
-int Welcome (void)
+void Welcome (void)
 {
-	GLCD_Bitmap(my_pic,1,0,126,64);
+		GLCD_Bitmap(my_pic,1,0,126,64);
 	GLCD_GoTo(0,6);
 	GLCD_WriteString("Multi-Task-Monitoring");
 	GLCD_GoTo(0,7);
@@ -209,7 +211,6 @@ int Welcome (void)
 	GLCD_WriteString("    2010 - 2011      ");
 	delay_ms(1500);
 	GLCD_ClearScreen();
-	return 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -233,6 +234,7 @@ can_Init 		();
 Setb(TC_CS_PRTS,TC_CS_PIN);
 
 TCInit			();
-GLCD_Initalize	();
-delay_ms(10);
+//delay_ms(1000);
+//GLCD_Initalize	();
+
 }

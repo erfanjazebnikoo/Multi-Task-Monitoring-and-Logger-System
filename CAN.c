@@ -27,7 +27,7 @@ unsigned int  CAN_TxRdy[2] = {0,0};              /* CAN HW ready to transmit a m
 unsigned int  CAN_RxRdy[2] = {0,0};              /* CAN HW received a message */
 
 
-#define  PCLK            24000000                /* Peripheral clock, depends on VPBDIV */
+#define  PCLK            18000000                /* Peripheral clock, depends on VPBDIV */
 
 /* Values of bit time register for different baudrates
    NT = Nominal bit time = TSEG1 + TSEG2 + 3

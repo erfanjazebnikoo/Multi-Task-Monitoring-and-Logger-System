@@ -1,9 +1,8 @@
 #include "Tab.h"
 
-int counter = 0;
+
 int Num;
-
-
+static int counter;
  
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,8 +79,7 @@ GLCD_WriteString("    ");
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-void Handling_Left (int Motor_L_RPM , int Motor_L_Current , int HL_Status ,
-										   	 int *CW_L , int *CCW_L , int *Stop_L){
+void Handling_Left (int Motor_L_RPM , int Motor_L_Current , int HL_Status){
 
 char mlr[20],mlc[20],hls[20];
 sprintf(mlr,"ML_RPM: %05d",Motor_L_RPM);
@@ -146,8 +144,7 @@ GLCD_WriteString("+---");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void Handling_Right (int Motor_R_RPM , int Motor_R_Current , int HR_Status ,
-											 int *CW_R , int *CCW_R , int *Stop_R){
+void Handling_Right (int Motor_R_RPM , int Motor_R_Current , int HR_Status){
 char mrr[20],mrc[20],hrs[20];
 sprintf(mrr,"MR_RPM: %05d",Motor_R_RPM);
 sprintf(mrc,"MR_Cur: %03dA",Motor_R_Current);
@@ -211,15 +208,14 @@ GLCD_WriteString("+---");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void Kicker (int In_Vol , int Cap_Vol , int Motor_Current , int Charge_Status ,
-		  int Kicker_Status , int *Kick , int *Change_State , int *Kicker_Power){
-char inv[20],capv[20],mtc[20],chs[20],ks[20];
+void Kicker (int In_Vol , int Cap_Vol , int Shoot_Status , int Fuse_Status ,
+		  int Kicker_Status){
+char inv[20],capv[20];
 
 sprintf(inv,"IN_V: %03dV",In_Vol);
 sprintf(capv,"CAP_V: %03dV",Cap_Vol);
-sprintf(mtc,"MT_Cur: %03dA",Motor_Current);
-sprintf(chs,"CHR_ST: %01d",Charge_Status);
-sprintf(ks,"KCk_ST: %03d",Kicker_Status);
+
+
 
 	GLCD_GoTo(0,0);
 	GLCD_WriteString("             ");
@@ -238,12 +234,47 @@ GLCD_GoTo(0,0);
 GLCD_WriteString(inv);
 GLCD_GoTo(0,1);
 GLCD_WriteString(capv);
-GLCD_GoTo(0,2);
-GLCD_WriteString(mtc);
-GLCD_GoTo(0,3);
-GLCD_WriteString(chs);
-GLCD_GoTo(0,4);
-GLCD_WriteString(ks);
+
+if(Shoot_Status == 1)
+{
+	GLCD_GoTo(0,2);
+	GLCD_WriteString("SHT_ST: Ch");	
+}
+
+else if (Shoot_Status == 2)
+{
+	GLCD_GoTo(0,2);
+	GLCD_WriteString("SHT_ST: Drc");	
+}
+else
+{
+	GLCD_GoTo(0,2);
+	GLCD_WriteString("SHT_ST: Null");	
+}
+
+if(Fuse_Status == 0)
+{
+	GLCD_GoTo(0,3);
+	GLCD_WriteString("Fuse_ST: Fld");	
+}
+
+else if (Fuse_Status == 1)
+{
+	GLCD_GoTo(0,3);
+	GLCD_WriteString("Fuse_ST: OK");	
+}
+
+if(Kicker_Status == 0)
+{
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("KCK_ST: DS");	
+}
+
+else if (Kicker_Status == 1)
+{
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("KCK_ST: EN");
+}
 
 GLCD_GoTo(104,0);
 GLCD_WriteString("|BHL|");
@@ -284,13 +315,11 @@ GLCD_WriteString("+---");
 
 void Power (int BT48V_Cell1 , int BT48V_Cell2 , int BT48V_Total , int BT24V ,
         	int IR1 , int IR2 , int Vision_Reset , int General_Key ,
-			int BT48_Curr , int BT24_Curr , int *Beep){
+			int BT48_Curr , int BT24_Curr){
 
 char c_48[20],t_48_24[20],ir[20],vs[20],b48c[20],b24c[20];
 sprintf(c_48,"C1:%03d C2:%03d",BT48V_Cell1,BT48V_Cell2);
 sprintf(t_48_24,"48:%03d 24:%03d",BT48V_Total,BT24V);
-sprintf(ir,"IR1: %01d IR2: %01d",IR1,IR2);
-sprintf(vs,"V_R: %01d G_K: %01d",Vision_Reset,General_Key);
 sprintf(b48c,"BT48_C: %03dA",BT48_Curr);
 sprintf(b24c,"BT24_C: %03dA",BT24_Curr);
 
@@ -316,10 +345,58 @@ sprintf(b24c,"BT24_C: %03dA",BT24_Curr);
 	GLCD_WriteString(b48c);
 	GLCD_GoTo(0,3);
 	GLCD_WriteString(b24c);
+//	GLCD_GoTo(0,4);
+//	GLCD_WriteString(ir);
+//	GLCD_GoTo(0,5);
+//	GLCD_WriteString(vs);
+
+if(IR1 == 1 && IR2 == 1)
+{
 	GLCD_GoTo(0,4);
-	GLCD_WriteString(ir);
+	GLCD_WriteString("IR1: T IR2: T");	
+}
+
+else if(IR1 == 1 && IR2 == 0)
+{
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("IR1: T IR2: F");	
+}
+
+else if(IR1 == 0 && IR2 == 1)
+{
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("IR1: F IR2: T");	
+}
+
+else if(IR1 == 0 && IR2 == 0)
+{
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("IR1: F IR2: F");	
+}
+
+if(Vision_Reset == 0)
+{
 	GLCD_GoTo(0,5);
-	GLCD_WriteString(vs);
+	GLCD_WriteString("VR: F");	
+}
+
+else if(Vision_Reset == 1)
+{
+	GLCD_GoTo(0,5);
+	GLCD_WriteString("VR: T");	
+}
+
+if(General_Key == 0)
+{
+	GLCD_GoTo(0,6);
+	GLCD_WriteString("GPK: F");	
+}
+
+else if (General_Key == 1)
+{
+	GLCD_GoTo(0,6);
+	GLCD_WriteString("GPK: T");
+}
 
 	GLCD_GoTo(104,0);
 	GLCD_WriteString("|BHL|");
@@ -380,71 +457,55 @@ return(0);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void Multi_Tasking (int FlagInterrupt)
+void Multi_Tasking (void)
 {
-int cnt;
-int m,n,p,beep;
-//int Lock_State,i=0;
-//int h;
-char a[20];
+int upd;
 static int k = 8;
 static int flag;
-unsigned int val_Rx = 0;
-unsigned int rxid;
-if (FlagInterrupt)
-{
-cnt = Num;
 
-if (CAN_RxRdy[0]) {                           /* rc message on CAN Controller #1 */
-      CAN_RxRdy[0] = 0;
-	  val_Rx = CAN_RxMsg[0].data[0];
-	  rxid = CAN_RxMsg[0].id;
-   }
-   if (val_Rx == 0xAF){
-   	delay_ms(1000);
-	RGBLED_ColorSET(2,Kck_RX_Color);
-	delay_ms(100);
-	RGBLED_ColorCLR(2,Kck_RX_Color);
-	GLCD_Initalize();
-	delay_ms(10);
-   }
+//if (FlagInterrupt>19)
+//{
+upd = Num;
+
+
 //   sprintf(a,"RX: %06d",val_Rx);
 //
 //	GLCD_GoTo(0,5);
 //	GLCD_WriteString(a);	
 	
-		
-delay_ms(10);
-
-sprintf(a,"ID: %02d",rxid);
-
+	
 //	GLCD_GoTo(0,6);
 //	GLCD_WriteString(a);
 
 
 if(k == 1)
 	{
-	Handling_Left (0,0,0,&m,&n,&p);
+	Handling_Left (0,0,0);
 	counter = k;
 	}
 else if(k == 2)
 	{
-	Handling_Right (0,0,0,&m,&n,&p);
+	Handling_Right (0,0,0);
 	counter = k;
 	}
-else if(k == 3)
+			
+else if (k == 3)
 	{
-	Kicker (0,0,0,0,0,&m,&n,&p);
+	Kicker (Rx_Data.Input_Vol,Rx_Data.Cap_Vol,Rx_Data.Shoot_Status,Rx_Data.Fuse_Status,Rx_Data.Kicker_Status);
+
 	counter = k;
 	}
-else if(k == 4)
+
+
+if(k == 4)
 	{
-	Power (0,0,0,0,0,0,0,0,0,0,&beep);
+	Power (Rx_Data.BT48V_Cell1,Rx_Data.BT48V_Cell2,Rx_Data.BT48V,Rx_Data.Input_Vol,
+	Rx_Data.IR1,Rx_Data.IR2,Rx_Data.Vision_Reset,Rx_Data.General_Key,0,0);
 	counter = k;
 	}
 else if (k == 8)
 	{
-	Main_Page(0,0,0,0);
+	Main_Page(Rx_Data.BT48V,Rx_Data.Input_Vol,0,0);
 	if (FIO2PIN & (1<<0))
 		{
 		GLCD_GoTo(31,7);
@@ -533,16 +594,66 @@ else if(k == 16)
 			Num = BHR_STP;	
 }
 
+RefreshTab();
+
 //sprintf(k2,"K: %01d C: %01d",k,counter);
 //GLCD_GoTo(0,6);
 //GLCD_WriteString(k2);
 
 k = Key_Read();
 
-if (cnt == Num)
+if (upd == Num)
 Num = 0;
+//}
 }
+//////////////////////////////////////////////////////////////////////////////////////////
+
+void RefreshTab(void)
+{
+
+if(counter == 1)
+{
+	if (CounterFlag>200)
+	{
+		//Kicker (Rx_Data.Input_Vol,Rx_Data.Cap_Vol,Rx_Data.Shoot_Status,Rx_Data.Fuse_Status,Rx_Data.Kicker_Status);
+		CounterFlag = 0;
+	}         
 }
+if(counter == 2)
+{
+	if (CounterFlag>200)
+	{
+		//Kicker (Rx_Data.Input_Vol,Rx_Data.Cap_Vol,Rx_Data.Shoot_Status,Rx_Data.Fuse_Status,Rx_Data.Kicker_Status);
+		CounterFlag = 0;
+	}         
+}
+if(counter == 3)
+{
+	if (CounterFlag>200)
+	{
+		Kicker (Rx_Data.Input_Vol,Rx_Data.Cap_Vol,Rx_Data.Shoot_Status,Rx_Data.Fuse_Status,Rx_Data.Kicker_Status);
+		CounterFlag = 0;
+	}         
+} 
+if(counter == 4)
+{
+	if (CounterFlag>200)
+	{
+		Power (Rx_Data.BT48V_Cell1,Rx_Data.BT48V_Cell2,Rx_Data.BT48V,Rx_Data.Input_Vol,
+		Rx_Data.IR1,Rx_Data.IR2,Rx_Data.Vision_Reset,Rx_Data.General_Key,0,0);
+		CounterFlag = 0;
+	}
+}
+if(counter == 8)
+{
+	if (CounterFlag>200)
+	{
+		Main_Page(Rx_Data.BT48V,Rx_Data.Input_Vol,0,0);
+		CounterFlag = 0;
+	}
+}        
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 
 int SendToCan(void)
