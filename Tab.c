@@ -3,6 +3,7 @@
 
 int z;
 int h=1;
+int counter = 0;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -17,16 +18,18 @@ sprintf(chs,"KCk_CH: %01d",Charge_Status);
 //GLCD_ClearScreen();
 
 
-GLCD_GoTo(0,0);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,1);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,2);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,3);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,4);
-GLCD_WriteString("            ");
+	GLCD_GoTo(0,0);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,1);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,2);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,3);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,5);
+	GLCD_WriteString("             ");
 
 GLCD_GoTo(0,0);
 GLCD_WriteString(bt48v);
@@ -57,17 +60,17 @@ GLCD_GoTo(0,7);
 GLCD_WriteString("      ");
 
 GLCD_GoTo(80,0);
-GLCD_WriteString("|   ");
+GLCD_WriteString("    ");
 GLCD_GoTo(80,1);
-GLCD_WriteString("+---");
+GLCD_WriteString("    ");
 GLCD_GoTo(80,2);
-GLCD_WriteString("|   ");
+GLCD_WriteString("    ");
 GLCD_GoTo(80,3);
-GLCD_WriteString("+---");
+GLCD_WriteString("    ");
 GLCD_GoTo(80,4);
-GLCD_WriteString("|   ");
+GLCD_WriteString("    ");
 GLCD_GoTo(80,5);
-GLCD_WriteString("+---");
+GLCD_WriteString("    ");
 //
 //for	(z=0;z<10000;z++);
 
@@ -76,24 +79,26 @@ GLCD_WriteString("+---");
 ////////////////////////////////////////////////////////////////////////////////////////
 
 void Handling_Left (int Motor_L_RPM , int Motor_L_Current , int HL_Status ,
-										   	 int *CW_L , int *CCW_L , int *Stop){
+										   	 int *CW_L , int *CCW_L , int *Stop_L){
 
 char mlr[20],mlc[20],hls[20];
-sprintf(mlr,"ML_RPM: %03d",Motor_L_RPM);
+sprintf(mlr,"ML_RPM: %05d",Motor_L_RPM);
 sprintf(mlc,"ML_Cur: %03dA",Motor_L_Current);
 sprintf(hls,"BHL_ST: %01d",HL_Status);
 
 
-GLCD_GoTo(0,0);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,1);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,2);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,3);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,4);
-GLCD_WriteString("            ");
+	GLCD_GoTo(0,0);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,1);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,2);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,3);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,5);
+	GLCD_WriteString("             ");
 
 GLCD_GoTo(0,0);
 GLCD_WriteString(mlr);
@@ -140,23 +145,25 @@ GLCD_WriteString("+---");
 //////////////////////////////////////////////////////////////////////////////////////////
 
 void Handling_Right (int Motor_R_RPM , int Motor_R_Current , int HR_Status ,
-											 int *CW_R , int *CCW_R , int *Stop){
+											 int *CW_R , int *CCW_R , int *Stop_R){
 char mrr[20],mrc[20],hrs[20];
-sprintf(mrr,"MR_RPM: %03d",Motor_R_RPM);
+sprintf(mrr,"MR_RPM: %05d",Motor_R_RPM);
 sprintf(mrc,"MR_Cur: %03dA",Motor_R_Current);
 sprintf(hrs,"BHR_ST: %01d",HR_Status);
 
 
-GLCD_GoTo(0,0);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,1);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,2);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,3);
-GLCD_WriteString("            ");
-GLCD_GoTo(0,4);
-GLCD_WriteString("            ");
+	GLCD_GoTo(0,0);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,1);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,2);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,3);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,5);
+	GLCD_WriteString("             ");
 
 GLCD_GoTo(0,0);
 GLCD_WriteString(mrr);
@@ -201,24 +208,172 @@ GLCD_WriteString("+---");
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-//
-//void Kicker (int In_Vol , int Cap_Vol , int Motor_Current , int Charge_Status ,
-//		  int Kicker_Status , int &Kick , int &Change_State , int &Kicker_Power){
-//
-//
-//
-//
-//}
-// 
+
+void Kicker (int In_Vol , int Cap_Vol , int Motor_Current , int Charge_Status ,
+		  int Kicker_Status , int *Kick , int *Change_State , int *Kicker_Power){
+char inv[20],capv[20],mtc[20],chs[20],ks[20];
+
+sprintf(inv,"IN_V: %03dV",In_Vol);
+sprintf(capv,"CAP_V: %03dV",Cap_Vol);
+sprintf(mtc,"MT_Cur: %03dA",Motor_Current);
+sprintf(chs,"CHR_ST: %01d",Charge_Status);
+sprintf(ks,"KCk_ST: %03d",Kicker_Status);
+
+	GLCD_GoTo(0,0);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,1);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,2);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,3);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,5);
+	GLCD_WriteString("             ");
+
+GLCD_GoTo(0,0);
+GLCD_WriteString(inv);
+GLCD_GoTo(0,1);
+GLCD_WriteString(capv);
+GLCD_GoTo(0,2);
+GLCD_WriteString(mtc);
+GLCD_GoTo(0,3);
+GLCD_WriteString(chs);
+GLCD_GoTo(0,4);
+GLCD_WriteString(ks);
+
+GLCD_GoTo(104,0);
+GLCD_WriteString("|BHL|");
+GLCD_GoTo(104,1);
+GLCD_WriteString("+---");
+GLCD_GoTo(104,2);
+GLCD_WriteString("|BHR|");
+GLCD_GoTo(104,3);
+GLCD_WriteString("+---");
+GLCD_GoTo(104,4);
+GLCD_WriteString("|   |");
+GLCD_GoTo(104,5);
+GLCD_WriteString("+---");
+GLCD_GoTo(104,6);
+GLCD_WriteString("|PWR|");
+GLCD_GoTo(104,7);
+GLCD_WriteString("+---");
+GLCD_GoTo(0,7);
+GLCD_WriteString("|BACK|");
+
+GLCD_GoTo(80,0);
+GLCD_WriteString("|KCK");
+GLCD_GoTo(80,1);
+GLCD_WriteString("+---");
+GLCD_GoTo(80,2);
+GLCD_WriteString("|ChS");
+GLCD_GoTo(80,3);
+GLCD_WriteString("+---");
+GLCD_GoTo(80,4);
+GLCD_WriteString("|E/D");
+GLCD_GoTo(80,5);
+GLCD_WriteString("+---");
+
+
+}
+ 
 //////////////////////////////////////////////////////////////////////////////////////////
+
+void Power (int BT48V_Cell1 , int BT48V_Cell2 , int BT48V_Total , int BT24V ,
+        	int IR1 , int IR2 , int Vision_Reset , int General_Key ,
+			int BT48_Curr , int BT24_Curr , int *Beep){
+int k,j;
+unsigned int val_Tx = 0, val_Rx = 0;
+char c_48[20],t_48_24[20],ir[20],vs[20],b48c[20],b24c[20];
+sprintf(c_48,"C1:%03d C2:%03d",BT48V_Cell1,BT48V_Cell2);
+sprintf(t_48_24,"48:%03d 24:%03d",BT48V_Total,BT24V);
+sprintf(ir,"IR1: %01d IR2: %01d",IR1,IR2);
+sprintf(vs,"V_R: %01d G_K: %01d",Vision_Reset,General_Key);
+sprintf(b48c,"BT48_C: %03dA",BT48_Curr);
+sprintf(b24c,"BT24_C: %03dA",BT24_Curr);
+
+	GLCD_GoTo(0,0);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,1);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,2);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,3);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,4);
+	GLCD_WriteString("             ");
+	GLCD_GoTo(0,5);
+	GLCD_WriteString("             ");
+
+
+	GLCD_GoTo(0,0);
+	GLCD_WriteString(c_48);
+	GLCD_GoTo(0,1);
+	GLCD_WriteString(t_48_24);
+	GLCD_GoTo(0,2);
+	GLCD_WriteString(b48c);
+	GLCD_GoTo(0,3);
+	GLCD_WriteString(b24c);
+	GLCD_GoTo(0,4);
+	GLCD_WriteString(ir);
+	GLCD_GoTo(0,5);
+	GLCD_WriteString(vs);
+
+	GLCD_GoTo(104,0);
+	GLCD_WriteString("|BHL|");
+	GLCD_GoTo(104,1);
+	GLCD_WriteString("+---");
+	GLCD_GoTo(104,2);
+	GLCD_WriteString("|BHR|");
+	GLCD_GoTo(104,3);
+	GLCD_WriteString("+---");
+	GLCD_GoTo(104,4);
+	GLCD_WriteString("|KCK|");
+	GLCD_GoTo(104,5);
+	GLCD_WriteString("+---");
+	GLCD_GoTo(104,6);
+	GLCD_WriteString("|   |");
+	GLCD_GoTo(104,7);
+	GLCD_WriteString("+---");
+	GLCD_GoTo(0,7);
+	GLCD_WriteString("|BACK|");
+	
+	GLCD_GoTo(80,0);
+	GLCD_WriteString("|BEP");
+	GLCD_GoTo(80,1);
+	GLCD_WriteString("+---");
+	GLCD_GoTo(80,2);
+	GLCD_WriteString("    ");
+	GLCD_GoTo(80,3);
+	GLCD_WriteString("    ");
+	GLCD_GoTo(80,4);
+	GLCD_WriteString("    ");
+	GLCD_GoTo(80,5);
+	GLCD_WriteString("    ");
+
+
+//CAN_TxMsg[1].id = 35;                           /* initialise message to send */
+//  for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
+//  CAN_TxMsg[1].len = 1;
+//  CAN_TxMsg[1].format = STANDARD_FORMAT;
+//  CAN_TxMsg[1].type = DATA_FRAME;
+//	
 //
-//void Power (int BT48V_Cell1 , int BT48V_Cell2 , int BT48V_Total , int BT24V ,
-//        	int IR1 , int IR2 , int Vision_Status , int General_Key , int &Beep){
+//	val_Tx=11;
+//     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
+//      CAN_TxRdy[1] = 0;
 //
+//      CAN_TxMsg[1].data[0] = val_Tx;             /* data[0] field = ADC value */
+//      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
+//    }
 //
-//
-//
-//}
+//    delay_ms (10);
+
+
+
+
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -226,8 +381,8 @@ int Push_Touch (int x1 , int x2 , int y1 , int y2){
 int Touch_X,Touch_Y;
 if(TCIsPenOn()){
 TCRead();
-	Touch_X = (TCGetX() - 220) / 28;
-	Touch_Y = (TCGetY() - 500) / 45;
+	Touch_X = TCGetX()/(26.8)-12; 
+	Touch_Y = TCGetY()/(46.4)-12;	
 }
 else{
 	Touch_X = 0;
@@ -247,60 +402,176 @@ return(0);
 
 void Multi_Tasking (void){
 
-int m,n,p;
-char b[20];
-int k;
-int flag;
+int m,n,p,beep,j;
+char k2[30];
+//char b[20];
+static int k = 8;
+static int flag;
+unsigned int val_Tx = 0, val_Rx = 0;
+unsigned int rxid;
 
-//int x,y;
-//char Touch_X[40],Touch_Y[40];
+	if (CAN_RxRdy[0]) {                           /* rc message on CAN Controller #1 */
+      CAN_RxRdy[0] = 0;
+	  val_Rx = CAN_RxMsg[0].data[0];
+	  rxid = CAN_RxMsg[0].id;
+   }
 
-//if(!TCIsPenOn()){
-//flag = 0;
-//}
-//if(flag == 0 && TCIsPenOn()){
-////BackLight(1);
-//if (FIO2PIN & (1<<0))
-//Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
-//else
-//Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
-//flag = 1;
-//}
-
-//TCRead();
-//	x = (TCGetX() - 220) / 28;
-//	y = (TCGetY() - 500) / 45;
-//else{
-//	x = 0;
-//	y = 0;
-//}	
-//
-//sprintf(Touch_X,"X: %03d",x);
-//sprintf(Touch_Y,"Y: %03d",y);
-//
-//GLCD_GoTo(0,0);
-//GLCD_WriteString(Touch_X);
-//GLCD_GoTo(0,2);
-//GLCD_WriteString(Touch_Y);
 		
+delay_ms(10);
 
-
-k = Key_Read();
 
 if(k == 1)
-Handling_Left (0,0,0,&m,&n,&p);
+	{
+	Handling_Left (0,0,0,&m,&n,&p);
+	counter = k;
+	}
 else if(k == 2)
-Handling_Right (0,0,0,&m,&n,&p);
-else
-Main_Page(0,0,0,0);
+	{
+	Handling_Right (0,0,0,&m,&n,&p);
+	counter = k;
+	}
+else if(k == 3)
+	{
+	Kicker (0,0,0,0,0,&m,&n,&p);
+	counter = k;
+	}
+else if(k == 4)
+	{
+	Power (0,0,0,0,0,0,0,0,0,0,&beep);
+	counter = k;
+	}
+else if (k == 8)
+	{
+	Main_Page(val_Rx,rxid,0,0);
+	if (FIO2PIN & (1<<0))
+		{
+		GLCD_GoTo(31,7);
+	    GLCD_WriteString(" |BCKL: ON |");
+		}
+	else
+		{
+		GLCD_GoTo(31,7);
+	    GLCD_WriteString(" |BCKL: OFF|");
+		}
+		counter = k;
+	}
+else if (k == 9)
+	{
+	if (flag == 0)
+		{
+		BackLight(1);
+		GLCD_GoTo(31,7);
+	    GLCD_WriteString(" |BCKL: ON |");
+		flag = 1;
+		}
+	else
+		{
+		BackLight(0);
+		GLCD_GoTo(31,7);
+	    GLCD_WriteString(" |BCKL: OFF|");
+		flag = 0;
+		}
+		counter = k;
+	}
+else if(k == 5)
+	{
+	if(counter == 4){
 
+	CAN_TxMsg[1].id = 35;                           /* initialise message to send */
+  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
+  	CAN_TxMsg[1].len = 1;
+  	CAN_TxMsg[1].format = STANDARD_FORMAT;
+  	CAN_TxMsg[1].type = DATA_FRAME;
+	
+
+     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
+      CAN_TxRdy[1] = 0;
+
+      CAN_TxMsg[1].data[0] = 24;             /* data[0] field = ADC value */
+      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
+    
+	}
+    delay_ms (500);
+	
+	}
+	else if(counter== 3){
+
+ CAN_TxMsg[1].id = 35;                           /* initialise message to send */
+  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
+  	CAN_TxMsg[1].len = 1;
+  	CAN_TxMsg[1].format = STANDARD_FORMAT;
+  	CAN_TxMsg[1].type = DATA_FRAME;
+	
+
+     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
+      CAN_TxRdy[1] = 0;
+
+      CAN_TxMsg[1].data[0] = 24;             /* data[0] field = ADC value */
+      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
+    
+	}
+    delay_ms (500);
+	CAN_TxMsg[1].id = 35;                           /* initialise message to send */
+  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
+  	CAN_TxMsg[1].len = 1;
+  	CAN_TxMsg[1].format = STANDARD_FORMAT;
+  	CAN_TxMsg[1].type = DATA_FRAME;
+	
+
+     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
+      CAN_TxRdy[1] = 0;
+
+      CAN_TxMsg[1].data[0] = 24;             /* data[0] field = ADC value */
+      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
+    
+	}
+    delay_ms (500);
+	CAN_TxMsg[1].id = 35;                           /* initialise message to send */
+  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
+  	CAN_TxMsg[1].len = 1;
+  	CAN_TxMsg[1].format = STANDARD_FORMAT;
+  	CAN_TxMsg[1].type = DATA_FRAME;
+	
+
+     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
+      CAN_TxRdy[1] = 0;
+
+      CAN_TxMsg[1].data[0] = 24;             /* data[0] field = ADC value */
+      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
+    
+	}
+    delay_ms (500);
+
+	 CAN_TxMsg[1].id = 0x30;                           /* initialise message to send */
+  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
+  	CAN_TxMsg[1].len = 3;
+  	CAN_TxMsg[1].format = STANDARD_FORMAT;
+  	CAN_TxMsg[1].type = DATA_FRAME;
+	
+
+     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
+      CAN_TxRdy[1] = 0;
+
+      CAN_TxMsg[1].data[0] = 206;             /* data[0] field = ADC value */
+	  CAN_TxMsg[1].data[1] = 97;
+	  CAN_TxMsg[1].data[2] = 168;
+      CAN_wrMsg (2, &CAN_TxMsg[1]);
+
+	}
+	}
+	}
+sprintf(k2,"K: %01d C: %01d",k,counter);
+GLCD_GoTo(0,6);
+GLCD_WriteString(k2);
+
+k = Key_Read();
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 
 int Button (void)
 {
-int flag;
+//int flag;
 int is_Push;
 Key BHL_Btn , BHR_Btn , KCK_Btn , PWR_Btn;
 Key Back_Btn , BCKL_Btn;
@@ -341,14 +612,14 @@ PWR_Btn.Y2 = 16;
 Back_Btn.X1 = 0;
 Back_Btn.X2 = 31;
 Back_Btn.Y1 = 0;
-Back_Btn.Y2 = 6;
+Back_Btn.Y2 = 12;
 
 /////////////////////////////////////////////
 
 BCKL_Btn.X1 = 39;
 BCKL_Btn.X2 = 99;
 BCKL_Btn.Y1 = 0;
-BCKL_Btn.Y2 = 6;
+BCKL_Btn.Y2 = 12;
 
 /////////////////////////////////////////////  	
 /////////////////////////////////////////////
@@ -420,24 +691,38 @@ is_Push = Push_Touch (BCKL_Btn.X1,BCKL_Btn.X2,BCKL_Btn.Y1,BCKL_Btn.Y2);
 if (is_Push)
 	return (9);
 //else
-//	return (0);
+return (0);
 
 }
-
 ///////////////////////////////////////////////////////////////////////////
 
 int Key_Read(void){
-
-return Button();
-
+static U32 KeyPushCounter,KeyMem,KeyLastState;
+KeyMem = Button();
+if (KeyMem)
+	{
+	KeyLastState = KeyMem; KeyPushCounter = 0;
+	while ((KeyMem == KeyLastState)&&(KeyPushCounter < 150))
+		{
+		KeyLastState = KeyMem;
+		KeyMem = Button();
+		KeyPushCounter++;
+		delay_ms(10);
+		}
+	if (KeyPushCounter < 150)
+		return (KeyLastState);
+	else
+		return (KeyLastState+9);
+	}
+return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////
 
 void BackLight(int counter){
 
-if (counter == 1)
+if (counter)
 Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
-else if (counter == 0)
+else
 Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
 }

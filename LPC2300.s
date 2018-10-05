@@ -356,9 +356,9 @@ CLKSRCSEL_Val   EQU     0x00000001
 PLLCFG_Val      EQU     0x0000000B
 CCLKCFG_Val     EQU     0x00000005
 USBCLKCFG_Val   EQU     0x00000005
-PCLKSEL0_Val    EQU     0x00000000
+PCLKSEL0_Val    EQU     0xA8000000
 PCLKSEL1_Val    EQU     0x00000000
-PCONP_Val       EQU     0x10206100
+PCONP_Val       EQU     0x00206506
 
 ;----------------------- Memory Accelerator Module (MAM) Definitions -----------
 
@@ -419,7 +419,7 @@ EMC_STA_WRD1_OFS    EQU 0x22C           ; EMCStaticWaitRd1
 EMC_STA_WPAGE1_OFS  EQU 0x230           ; EMCStaticWaitPage1
 EMC_STA_WWR1_OFS    EQU 0x234           ; EMCStaticWaitWr1
 EMC_STA_WTURN1_OFS  EQU 0x238           ; EMCStaticWaitTurn1
-EMC_STA_EXT_W_OFS   EQU 0x880           ; EMCStaticExtendedWait
+EMC_STA_EXT_W_OFS   EQU 0x080           ; EMCStaticExtendedWait
 
 BUFEN_Const         EQU (1 << 19)       ; Buffer enable bit
 EMC_PCONP_Const     EQU (1 << 11)       ; PCONP val to enable power for EMC

@@ -71,30 +71,26 @@ while(*stringToWrite)
 //-------------------------------------------------------------------------------------------------
 //
 //-------------------------------------------------------------------------------------------------
-//void GLCD_SetPixel(unsigned char x, unsigned char y, unsigned char color)
-//{
-//unsigned char tmp;
-//GLCD_GoTo(x, (y / 8));
-//tmp = GLCD_ReadData();
-//GLCD_GoTo(x, (y / 8));
-//tmp = GLCD_ReadData();
-//GLCD_GoTo(x, (y / 8));
-//tmp |= (1 << (y % 8));
-//GLCD_WriteData(tmp);
-//}
+void GLCD_SetPixel(unsigned char x, unsigned char y, unsigned char color)
+{
+unsigned char tmp;
+GLCD_GoTo(x, (y / 8));
+tmp |= (1 << (y % 8));
+GLCD_WriteData(tmp);
+}
 //-------------------------------------------------------------------------------------------------
 //
 //-------------------------------------------------------------------------------------------------
-//void GLCD_Bitmap(char * bmp, unsigned char x, unsigned char y, unsigned char dx, unsigned char dy)
-//{
-//unsigned char i, j;
-//for(j = 0; j < dy / 8; j++)
-//  {
-//  GLCD_GoTo(x,y + j);
-//  for(i = 0; i < dx; i++) 
-//    GLCD_WriteData(GLCD_ReadByteFromROMMemory(bmp++));
-//  }
-//}
+void GLCD_Bitmap(char * bmp, unsigned char x, unsigned char y, unsigned char dx, unsigned char dy)
+{
+unsigned char i, j;
+for(j = 0; j < dy / 8; j++)
+  {
+  GLCD_GoTo(x,y + j);
+  for(i = 0; i < dx; i++) 
+    GLCD_WriteData(GLCD_ReadByteFromROMMemory(bmp++));
+  }
+}
 //-------------------------------------------------------------------------------------------------
 //
 //-------------------------------------------------------------------------------------------------

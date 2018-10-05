@@ -15,12 +15,12 @@ Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
 
 //////////////////////////////////////////////////////////////////////////////
 
-void card_Init (void) {
-   U32 i; 
-
- while (finit() != 0)
-		for(i=0;i<=0x00FFFFFF;i++);
- }
+//void card_Init (void) {
+//   U32 i; 
+//
+// while (finit() != 0)
+//		for(i=0;i<=0x00FFFFFF;i++);
+// }
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -28,7 +28,7 @@ void can_Init (void) {
 
   CAN_setup (1);                                  /* setup CAN Controller #1 */
   CAN_setup (2);                                  /* setup CAN Controller #2 */
- // CAN_wrFilter (1, 33, STANDARD_FORMAT);          /* Enable reception of messages */
+//  CAN_wrFilter (1, 45, STANDARD_FORMAT);          /* Enable reception of messages */
 
   CAN_start (1);                                  /* start CAN Controller #2 */
   CAN_start (2);                                  /* start CAN Controller #2 */
@@ -44,18 +44,18 @@ int i;
 
 IO_Init();
 
-//GLCD_Initalize();
+GLCD_Initalize();
 
 #ifdef RT_AGENT
   RTA_Init();                                     /* Initialize Real-Time Agent  */
 #endif
-  card_Init ();
- // can_Init ();
+  //card_Init ();
+  can_Init ();
 
-//Setb(TC_CS_PRTS,TC_CS_PIN);
-//
-//TCInit();
-//for(i=0;i<100;i++);
+Setb(TC_CS_PRTS,TC_CS_PIN);
+
+TCInit();
+for(i=0;i<100;i++);
 
 
 

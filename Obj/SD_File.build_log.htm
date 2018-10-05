@@ -27,23 +27,6 @@ Project File Date:  10/05/2018
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil\ARM\ARMCC\Bin'
 Build target 'Monitoring System'
-compiling Getline.c...
-Getline.c(12): error:  #5: cannot open source input file "RTL.h": No such file or directory
-  #include <RTL.h>
-Getline.c: 0 warnings, 1 error
-compiling File_Config.c...
-File_Config.c(12): error:  #5: cannot open source input file "File_Config.h": No such file or directory
-  #include <File_Config.h>
-File_Config.c: 0 warnings, 1 error
-compiling initialization.c...
-initialization.h(6): error:  #5: cannot open source input file "RTL.h": No such file or directory
-  #include <RTL.h>                      /* RTL kernel functions & defines      */
-initialization.c: 0 warnings, 1 error
-compiling Main.c...
-initialization.h(6): error:  #5: cannot open source input file "RTL.h": No such file or directory
-  #include <RTL.h>                      /* RTL kernel functions & defines      */
-Main.c: 0 warnings, 1 error
-assembling LPC2300.s...
 compiling MCI_LPC23xx.c...
 MCI_LPC23xx.c(12): error:  #5: cannot open source input file "File_Config.h": No such file or directory
   #include <File_Config.h>
@@ -52,15 +35,31 @@ compiling Retarget.c...
 Retarget.c(16): error:  #5: cannot open source input file "File_Config.h": No such file or directory
   #include <File_Config.h>
 Retarget.c: 0 warnings, 1 error
-compiling Serial.c...
-compiling KS0108-LPC.c...
+compiling File_Config.c...
+File_Config.c(12): error:  #5: cannot open source input file "File_Config.h": No such file or directory
+  #include <File_Config.h>
+File_Config.c: 0 warnings, 1 error
+compiling Getline.c...
+Getline.c(12): error:  #5: cannot open source input file "RTL.h": No such file or directory
+  #include <RTL.h>
+Getline.c: 0 warnings, 1 error
 compiling KS0108.c...
-compiling tc_ad7843_v1_00.c...
-compiling spi_lpc23xx_v1_01.c...
-compiling CAN.c...
-".\Obj\SD_File.axf" - 6 Error(s), 0 Warning(s).
+compiling initialization.c...
+compiling Main.c...
+Main.c(29): warning:  #177-D: variable "x"  was declared but never referenced
+   int x,y; 
+Main.c(29): warning:  #177-D: variable "y"  was declared but never referenced
+   int x,y; 
+Main.c(31): warning:  #177-D: variable "val_Tx"  was declared but never referenced
+     unsigned int val_Tx = 0, val_Rx = 0;
+Main.c(31): warning:  #550-D: variable "val_Rx"  was set but never used
+     unsigned int val_Tx = 0, val_Rx = 0;
+Main.c(32): warning:  #550-D: variable "rxid"  was set but never used
+  unsigned int rxid = 0;
+Main.c: 5 warnings, 0 errors
+".\Obj\SD_File.axf" - 4 Error(s), 5 Warning(s).
 Target not created.
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

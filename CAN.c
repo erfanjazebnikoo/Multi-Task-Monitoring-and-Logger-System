@@ -67,7 +67,7 @@ static void CAN_cfgBaudrate (uint32_t ctrl, uint32_t baudrate)  {
   uint32_t nominal_time;
 
   /* Determine which nominal time to use for PCLK and baudrate */
-  if (baudrate <= 500000)  {
+  if (baudrate <= 250000)  {
     nominal_time = 12;
   }  else if (((PCLK / 1000000) % 15) == 0)  {
     nominal_time = 15;
@@ -104,8 +104,8 @@ void CAN_setup (uint32_t ctrl)  {
   } else {
     PCONP   |= 1 << 14;                          /* Enable clock for CAN2 */
     PINSEL0 &= 0xFFFFF0FF;                       /* Reset CAN2 bits */
-    PINSEL0 |= 0x00000A00;                       /* Set CAN2 bits to b1010 */
-    
+    //PINSEL0 |= 0x00000A00;                       /* Set CAN2 bits to b1010 */
+    PINSEL4 |= (1 << 14)|(1 << 16);
     *(&VICVectAddr23) = (unsigned long) CAN_ISR; /* Set interrupt vector for CAN */
     *(&VICVectCntl23) = 1;
     
@@ -116,7 +116,7 @@ void CAN_setup (uint32_t ctrl)  {
   pCAN->MOD   = 1;                               /* Enter reset mode */
   pCAN->IER   = 0;                               /* Disable all interrupts */
   pCAN->GSR   = 0;                               /* Clear status register */
-  CAN_cfgBaudrate(ctrl, 500000);                 /* Set bit timing */
+  CAN_cfgBaudrate(ctrl, 250000);                 /* Set bit timing */
   pCAN->IER   = 0x0003;                          /* Enable Tx and Rx interrupt */
 }
 
