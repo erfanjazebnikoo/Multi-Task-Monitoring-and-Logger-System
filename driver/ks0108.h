@@ -1,5 +1,4 @@
 
-
 #define KS0108_SCREEN_WIDTH		128
 #define KS0108_SCREEN_HEIGHT	64
 

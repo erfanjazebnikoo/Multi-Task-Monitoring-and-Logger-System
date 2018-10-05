@@ -1,31 +1,29 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.9 - MMC
-* Date    : 05/19/2011
+* Version : V1.0
+* Date    : 06/29/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
 * Clock frequency     : 12.000000 MHz
 ************************************************************************/
 
-#include "Tab.h"
+#include "tab.h"
 
 
 int Num;
 static int counter;
-static int LockNum;
  
 ////////////////////////////////////////////////////////////////////////////////////////
 
 void Main_Page (float BT48V_Cell1 , float BT48V_Cell2 ,float BT48V , float BT24V , int Conn_Status , int Charge_Status){
-char c_48_1[20],c_48_2[20],bt48v[20],bt24v[20],cst[20],chs[20];
+char c_48_1[20],c_48_2[20],bt24v[20],cst[20],chs[20];
 
 BT48V = (float)BT48V/10;
 BT24V = (float)BT24V/10;
 BT48V_Cell1 = (float)BT48V_Cell1/10;
 BT48V_Cell2 = (float)BT48V_Cell2/10;
 
-//sprintf(bt48v,"48V: %02.01fV",BT48V);
 sprintf(bt24v,"24V   : %02.01fV",BT24V);
 sprintf(cst,"CAN_ST: %01d",Conn_Status);
 sprintf(chs,"KCk_CH: %01d",Charge_Status);
@@ -41,32 +39,21 @@ GLCD_WriteString("                ");
 GLCD_GoTo(0,3);
 GLCD_WriteString("                ");
 GLCD_GoTo(0,4);
-GLCD_WriteString("                ");
+GLCD_WriteString("                 ");
 GLCD_GoTo(0,5);
-GLCD_WriteString("                ");
+GLCD_WriteString("                 ");
 GLCD_GoTo(0,6);
 GLCD_WriteString("                   ");
 GLCD_GoTo(0,7);
 GLCD_WriteString("                ");
 
-//GLCD_GoTo(0,0);
-//GLCD_WriteString(bt48v);
-//GLCD_SetPixel(41,6,1);
 GLCD_GoTo(0,0);
 GLCD_WriteString(bt24v);
-//GLCD_SetPixel(41,14,1);
 GLCD_GoTo(0,1);
 GLCD_WriteString(c_48_1);
-//GLCD_SetPixel(47,22,1);
 GLCD_GoTo(0,2);
 GLCD_WriteString(c_48_2);
-//GLCD_SetPixel(47,30,1);
 
-
-//GLCD_GoTo(0,2);
-//GLCD_WriteString(cst);
-//GLCD_GoTo(0,3);
-//GLCD_WriteString(chs);
 
 GLCD_GoTo(104,0);
 GLCD_WriteString("|BHL|");
@@ -88,17 +75,17 @@ GLCD_GoTo(0,7);
 GLCD_WriteString("      ");
 
 GLCD_GoTo(80,0);
-GLCD_WriteString("|L&R");
+GLCD_WriteString("|SPI");
 GLCD_GoTo(80,1);
 GLCD_WriteString("+---");
 GLCD_GoTo(80,2);
-GLCD_WriteString("    ");
+GLCD_WriteString("|SPO");
 GLCD_GoTo(80,3);
-GLCD_WriteString("    ");
-//GLCD_GoTo(80,4);
-//GLCD_WriteString("    ");
-//GLCD_GoTo(80,5);
-//GLCD_WriteString("    ");
+GLCD_WriteString("+---");
+GLCD_GoTo(80,4);
+GLCD_WriteString("|SPS");
+GLCD_GoTo(80,5);
+GLCD_WriteString("+---");
 
 }
 
@@ -120,9 +107,9 @@ GLCD_WriteString("             ");
 GLCD_GoTo(0,3);
 GLCD_WriteString("             ");
 GLCD_GoTo(0,4);
-GLCD_WriteString("             ");
+GLCD_WriteString("              ");
 GLCD_GoTo(0,5);
-GLCD_WriteString("             ");
+GLCD_WriteString("              ");
 GLCD_GoTo(0,6);
 GLCD_WriteString("             ");
 
@@ -184,9 +171,9 @@ GLCD_WriteString("             ");
 GLCD_GoTo(0,3);
 GLCD_WriteString("             ");
 GLCD_GoTo(0,4);
-GLCD_WriteString("             ");
+GLCD_WriteString("              ");
 GLCD_GoTo(0,5);
-GLCD_WriteString("             ");
+GLCD_WriteString("              ");
 GLCD_GoTo(0,6);
 GLCD_WriteString("             ");
 
@@ -250,18 +237,16 @@ GLCD_WriteString("             ");
 GLCD_GoTo(0,3);
 GLCD_WriteString("             ");
 GLCD_GoTo(0,4);
-GLCD_WriteString("             ");
+GLCD_WriteString("              ");
 GLCD_GoTo(0,5);
-GLCD_WriteString("             ");
+GLCD_WriteString("              ");
 GLCD_GoTo(0,6);
 GLCD_WriteString("             ");
 
 GLCD_GoTo(0,0);
 GLCD_WriteString(inv);
-//GLCD_SetPixel(47,6,1);
 GLCD_GoTo(0,1);
 GLCD_WriteString(capv);
-//GLCD_SetPixel(53,14,1);
 
 if(Shoot_Status == 1)
 {
@@ -359,20 +344,16 @@ GLCD_WriteString("             ");
 GLCD_GoTo(0,3);
 GLCD_WriteString("             ");
 GLCD_GoTo(0,4);
-GLCD_WriteString("             ");
+GLCD_WriteString("              ");
 GLCD_GoTo(0,5);
-GLCD_WriteString("             ");
+GLCD_WriteString("              ");
 GLCD_GoTo(0,6);
 GLCD_WriteString("             ");
 
 GLCD_GoTo(0,0);
 GLCD_WriteString(c_48);
-//GLCD_SetPixel(29,6,1);
-//GLCD_SetPixel(71,6,1);
 GLCD_GoTo(0,1);
 GLCD_WriteString(t_48_24);
-//GLCD_SetPixel(29,14,1);
-//GLCD_SetPixel(71,14,1);
 GLCD_GoTo(0,2);
 GLCD_WriteString(b48c);
 GLCD_GoTo(0,3);
@@ -445,10 +426,6 @@ GLCD_WriteString("+---");
 GLCD_GoTo(0,7);
 GLCD_WriteString("|BACK|");
 
-//GLCD_GoTo(80,0);
-//GLCD_WriteString("    ");
-//GLCD_GoTo(80,1);
-//GLCD_WriteString("    ");
 GLCD_GoTo(80,2);
 GLCD_WriteString("    ");
 GLCD_GoTo(80,3);
@@ -580,7 +557,7 @@ else if(k == 14)
 			Num = BHR_CW;
 
 		if(counter == 8)
-			LockNum = 148;
+			Num = BHT_IN;
 }
 
 else if(k == 15)
@@ -590,7 +567,10 @@ else if(k == 15)
 			Num = BHL_CCW;
 
 		if(counter == 2)
-			Num = BHR_CCW;		
+			Num = BHR_CCW;
+			
+		if(counter == 8)
+			Num = BHT_OUT;			
 		
 }
 
@@ -603,7 +583,10 @@ else if(k == 16)
 			Num = BHR_STP;
 
 		if(counter == 4)
-			Num = PWR_BEEP;		
+			Num = PWR_BEEP;
+		
+		if(counter == 8)
+			Num = BHT_STP;		
 }
 
 RefreshTab();
@@ -618,28 +601,11 @@ Num = 0;
 
 void RefreshTab(void)
 {
-//if(counter == 1)
-//{
-//	if (CounterFlag>200)
-//	{
-//		//Kicker (Rx_Data.Input_Vol,Rx_Data.Cap_Vol,Rx_Data.Shoot_Status,Rx_Data.Fuse_Status,Rx_Data.Kicker_Status);
-//		CounterFlag = 0;
-//	}         
-//}
-//if(counter == 2)
-//{
-//	if (CounterFlag>200)
-//	{
-//		//Kicker (Rx_Data.Input_Vol,Rx_Data.Cap_Vol,Rx_Data.Shoot_Status,Rx_Data.Fuse_Status,Rx_Data.Kicker_Status);
-//		CounterFlag = 0;
-//	}         
-//}
 if(counter == 3)
 {
 	if (CounterFlag>300)
 	{	
 		Kicker (Rx_Data.Input_Vol,Rx_Data.Cap_Vol,Rx_Data.Shoot_Status,Rx_Data.Fuse_Status,Rx_Data.Kicker_Status);
-		Logging();
 		CounterFlag = 0;
 	}         
 } 
@@ -649,14 +615,13 @@ if(counter == 4)
 	{
 		Power (Rx_Data.BT48V_Cell1,Rx_Data.BT48V_Cell2,Rx_Data.BT48V,Rx_Data.Input_Vol,
 		Rx_Data.IR1,Rx_Data.IR2,Rx_Data.Vision_Reset,Rx_Data.General_Key,0,0);
-		Logging();
 		CounterFlag = 0;
 	}
 }
 if(counter == 8)
 {
 
-	if (CounterFlag>500)
+	if (CounterFlag>300)
 	{
 		Main_Page(Rx_Data.BT48V_Cell1,Rx_Data.BT48V_Cell2,Rx_Data.BT48V,Rx_Data.Input_Vol,0,0);
 		if (FIO2PIN & (1<<0))
@@ -673,11 +638,10 @@ if(counter == 8)
 		GLCD_WriteString(clock);
 		GLCD_GoTo(0,5);
 		GLCD_WriteString(date);
-		Logging();
+	
 		CounterFlag = 0;
 	}
-} 
-       
+}        
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -691,7 +655,7 @@ int SendToCan(void)
 
 int Button (void)
 {
-//int flag;
+
 int is_Push;
 Key BHL_Btn , BHR_Btn , KCK_Btn , PWR_Btn;
 Key Back_Btn , BCKL_Btn;

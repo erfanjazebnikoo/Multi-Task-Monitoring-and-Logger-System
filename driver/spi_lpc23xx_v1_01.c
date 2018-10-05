@@ -1,4 +1,4 @@
-#include "app_config.h"
+#include "../app_config.h"
 
 #ifndef SPI_BUF_CNT_TYPE
 #define SPI_BUF_CNT_TYPE	unsigned char

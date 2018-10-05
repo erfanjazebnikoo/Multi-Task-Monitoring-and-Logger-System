@@ -86,7 +86,7 @@ U32 install_irq( U32 IntNumber, void *HandlerAddr, U32 Priority )
     VICIntEnClr = 1 << IntNumber;	/* Disable Interrupt */
     if ( IntNumber >= VIC_SIZE )
     {
-		return ( 0 );
+		return ( FALSE );
     }
     else
     {
@@ -96,7 +96,7 @@ U32 install_irq( U32 IntNumber, void *HandlerAddr, U32 Priority )
 		*vect_addr   = (U32)HandlerAddr;	/* set interrupt vector */
 		*vect_prio   = Priority;
 		VICIntEnable = 1 << IntNumber;	/* Enable Interrupt */
-		return( 1 );
+		return( TRUE );
     }
 }
 

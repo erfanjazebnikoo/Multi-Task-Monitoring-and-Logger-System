@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.9 - MMC
-* Date    : 05/19/2011
+* Version : V1.0
+* Date    : 06/29/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -11,7 +11,7 @@
 #ifndef _NETWORK_H
 #define _NETWORK_H
 
-#include "initialization.h" 
+#include "../initialization.h" 
 
 #define BHL_CW 		114
 #define BHL_CCW 	115
@@ -19,6 +19,9 @@
 #define BHR_CW 		214
 #define BHR_CCW 	215
 #define BHR_STP 	216
+#define BHT_IN		1481
+#define BHT_OUT		1482
+#define BHT_STP		1480
 #define KCK_KCK 	314
 #define KCK_ChS 	36
 #define KCK_ED 		37
@@ -49,12 +52,10 @@ float BT48V;
 int IR1,IR2;
 int Vision_Reset;
 int General_Key;
-int Rx_Data0;
 
 }Rx_Var;
 
 extern Rx_Var Rx_Data;
-extern char RxID;
 
 //////////////////////////////////////////////////////
 

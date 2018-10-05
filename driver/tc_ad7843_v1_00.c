@@ -1,4 +1,4 @@
-#include "app_config.h"
+#include "../app_config.h"
 
 
 #define TC_SPI_WIDTH	15 //use 15 clock per 1 SPI cycle

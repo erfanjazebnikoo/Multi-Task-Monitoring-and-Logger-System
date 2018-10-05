@@ -1,8 +1,8 @@
 //---------------------------------------------------------------------------
 //    A header datafile for glcd bitmap created with bmp2glcd by S.Varjo 
 //---------------------------------------------------------------------------
-#ifndef _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
-#define _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
+#ifndef _PIC1_GLCD_H 
+#define _PIC1_GLCD_H 
 
 #define my_pic2_HEIGHT 64 
 #define my_pic2_WIDTH  59 
@@ -40,5 +40,4 @@ static char my_pic[]={
 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7e, 0x7c, 
 0x7c, 0x78, 0x70, 0x60, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-#endif  //define _D:\PROJECT\MONITORING SYSTEM\PIC\PIC1_GLCD_H 
-
+#endif

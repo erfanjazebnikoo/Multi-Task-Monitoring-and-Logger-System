@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.9 - MMC
-* Date    : 05/19/2011
+* Version : V1.0
+* Date    : 06/29/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -11,7 +11,7 @@
 #ifndef _RGBLED_H
 #define _RGBLED_H
 
-#include "initialization.h" 
+#include "../initialization.h" 
 
 #define	Blue	1
 #define Green	2

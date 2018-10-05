@@ -1,14 +1,14 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.9 - MMC
-* Date    : 05/19/2011
+* Version : V1.0
+* Date    : 06/29/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
 * Clock frequency     : 12.000000 MHz
 ************************************************************************/
 
-#include "initialization.h"
+#include "../initialization.h"
 
 #ifndef _TAB_H
 #define _TAB_H

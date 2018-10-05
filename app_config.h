@@ -14,7 +14,7 @@
 #define Rdb(FIOnPIN,bitnum)			FIOnPIN & 1 << bitnum
 
 //board's pin configuration
-#include "hw_blue_screen.h"
+#include "util/hw_blue_screen.h"
 #define TS_XDAT		(*(volatile unsigned char *)0x80000800)
 #define TS_XINS		(*(volatile unsigned char *)0x80000000)
 
@@ -29,7 +29,7 @@
 
 //all other header files
 //#include "utils_custom_v1_00.h"
-#include "spi_lpc23xx_v1_01.h"
+#include "driver/spi_lpc23xx_v1_01.h"
 //#include "serial_lpc23xx_v1_00.h"
 //#include "console_v1_01.h"
 //#include "i2c_lpc23xx_v1_00.h"
@@ -41,7 +41,7 @@
 
 //#include "vs1011e_v1_00.h"
  
-#include "tc_ad7843_v1_00.h"
+#include "driver/tc_ad7843_v1_00.h"
 //#include "tslcd_elt240320tp_v1_20.h"
 //#include "screen_obj_v1_00.h"
 //#include "app_screen_obj.h"

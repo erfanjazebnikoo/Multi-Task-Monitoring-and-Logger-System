@@ -1,25 +1,19 @@
 /************************************************************************
-/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-\/\/\/\/\/\ Project : MRL - MSL Multi Task Monitoring and Logger System \
-/\/\/\/\/\/ Version : V1.5 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-\/\/\/\/\/\ Date    : 03/30/2011 /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-/\/\/\/\/\/ Author  : Erfan Jazeb Nikoo /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-\/\/\/\/\/\ Leader	: Behnam Eskandariun /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\                         
-/\/\/\/\/\/ Company : MRL - Middle Size League \/\/\/\/\/\/\/\/\/\/\/\/\/                          
-\/\/\/\/\/\ File	: Network.C \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-/\/\/\/\/\/ Compiler: KEIL uVision V4.01 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-\/\/\/\/\/\ Chip type           : LPC2368 NXP ARM7 /\/\/\/\/\/\/\/\/\/\/\
-/\/\/\/\/\/ Clock frequency     : 12.000000 MHz	/\/\/\/\/\/\/\/\/\/\/\/\/
-\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+* Project : Multi Task Monitoring and Logger System
+* Version : V1.0
+* Date    : 06/29/2011
+* Author  : Erfan Jazeb Nikoo
+* Compiler: KEIL uVision V4.01
+* Chip type           : LPC2368 NXP ARM7
+* Clock frequency     : 12.000000 MHz
 ************************************************************************/
 
-#include "Network.h"
+#include "network.h"
 
 DATA data;
-static char flagKCK;
+static char flagKCK,fuseflag=0;
 static char flagset,FFFlag =0;
 Rx_Var Rx_Data;
-char RxID;
 
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////CAN Transmitter//////////////////////////////////
@@ -93,21 +87,69 @@ else if(TabNum == BHR_STP)
 	RGBLED_ColorCLR(1,BHR_TX_Color);
 	delay_ms (10);
 }
+
+
+else if(TabNum == BHT_IN)
+{
+	data.D0 = Handeling_EN;
+	data.D1 = (char)(Handeling_Spd_CW >>8 & 0xFF);
+	data.D2 = (char)(Handeling_Spd_CW & 0xFF);
+	data.D3 = (char)(Handeling_Spd_CW >>8 & 0xFF);
+	data.D4 = (char)(Handeling_Spd_CW & 0xFF);
+	RGBLED_ColorSET(1,BHR_TX_Color);
+	can_Send (Handeling_ID , 5 , &data);
+	delay_ms(100);
+	RGBLED_ColorCLR(1,BHR_TX_Color);
+	delay_ms (10);
+}
+
+else if(TabNum == BHT_OUT)
+{
+	data.D0 = Handeling_EN;
+	data.D1 = (char)(Handeling_Spd_CCW >>8 & 0xFF);
+	data.D2 = (char)(Handeling_Spd_CCW & 0xFF);
+	data.D3 = (char)(Handeling_Spd_CCW >>8 & 0xFF);
+	data.D4 = (char)(Handeling_Spd_CCW & 0xFF);
+	RGBLED_ColorSET(1,BHR_TX_Color);
+	can_Send (Handeling_ID , 5 , &data);
+	delay_ms(100);
+	RGBLED_ColorCLR(1,BHR_TX_Color);
+	delay_ms (10);
+}
+
+else if(TabNum == BHT_STP)
+{
+	data.D0 = Handeling_EN;
+	data.D1 = 0x00;
+	data.D2 = 0x00;
+	data.D3 = 0x00;
+	data.D4 = 0x00;
+	RGBLED_ColorSET(1,BHL_TX_Color);
+	can_Send (Handeling_ID , 5 , &data);
+	delay_ms(100);
+	RGBLED_ColorCLR(1,BHL_TX_Color);
+	delay_ms (10);
+}
+
+
 else if(TabNum == KCK_KCK)
 {
 	data.D0 = BEEP;
+	data.D1 = 0x05; 
+	can_Send (Power_ID , 2 , &data);
 	RGBLED_ColorSET(1,Pwr_TX_Color);
 	can_Send (Power_ID , 1 , &data);
+	delay_ms(100);
+	can_Send (Power_ID , 2 , &data);
+ 	delay_ms (500);
+	RGBLED_ColorSET(1,Pwr_TX_Color);
+	can_Send (Power_ID , 2 , &data);
 	delay_ms(100);
 	RGBLED_ColorCLR(1,Pwr_TX_Color);
  	delay_ms (500);
 	RGBLED_ColorSET(1,Pwr_TX_Color);
-	can_Send (Power_ID , 1 , &data);
-	delay_ms(100);
-	RGBLED_ColorCLR(1,Pwr_TX_Color);
- 	delay_ms (500);
-	RGBLED_ColorSET(1,Pwr_TX_Color);
-	can_Send (Power_ID , 1 , &data);
+	data.D1 = 0x10;
+	can_Send (Power_ID , 2 , &data);
 	delay_ms(100);
 	RGBLED_ColorCLR(1,Pwr_TX_Color);
  	delay_ms (500);
@@ -212,6 +254,7 @@ delay_ms (10);
 void Can_Rx (void)
 {
 static char flagK,flagP1,flagP2,FFlag;
+char RxID;
 char data_rx[8];
 int i;
 
@@ -238,25 +281,33 @@ if (RxID == Kicker_Rx_ID)
 			flagK = 1;	
 			RGBLED_ColorCLR(2,Kck_RX_Color);	
 		}
-	Rx_Data.Rx_Data0 = data_rx[0];
 	GLCD_Initalize();
 	}
 	else if(data_rx[0] == 0xAF)
 	{				
-		Rx_Data.Rx_Data0 = data_rx[0];
-		Rx_Data.Cap_Vol = (data_rx[1] <<8) + data_rx[2]; 
+		Rx_Data.Cap_Vol = (data_rx[1] <<8) + data_rx[2];      
 		Rx_Data.Input_Vol = data_rx[3];
 		Rx_Data.Kicker_Status = data_rx[4];
 		Rx_Data.Shoot_Status = data_rx[5];
 		Rx_Data.Fuse_Status = data_rx[6];
 		if(Rx_Data.Fuse_Status == 0)
 		{
+			fuseflag=0;
 			FFFlag = 1;
 			if (FFlag)
 			{
 				FFlag = 0;
 				RGBLED_ColorRST ();
 				Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
+				GLCD_ClearScreen();
+				GLCD_GoTo(30,0);
+				GLCD_WriteString("! Warning !");
+				GLCD_GoTo(33,2);
+				GLCD_WriteString("! Kicker !");
+				GLCD_GoTo(25,4);
+				GLCD_WriteString("! Fuse Fault!");
+				GLCD_GoTo(8,6);
+				GLCD_WriteString("! Reset the Robot !");
 			}
 			else
 			{
@@ -264,9 +315,23 @@ if (RxID == Kicker_Rx_ID)
 				RGBLED_ColorRST ();
 				RGBLED_ColorSET(1,Fault_TX_Color);
 				RGBLED_ColorSET(2,Fault_RX_Color);
-				Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);				
+				Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
+				GLCD_ClearScreen();
+				GLCD_GoTo(30,0);
+				GLCD_WriteString("! Warning !");
+				GLCD_GoTo(33,2);
+				GLCD_WriteString("! Kicker !");
+				GLCD_GoTo(25,4);
+				GLCD_WriteString("! Fuse Fault!");
+				GLCD_GoTo(8,6);
+				GLCD_WriteString("! Reset the Robot !");
+							
 			}
 			flagK = 0;	
+		}
+		else if (Rx_Data.Fuse_Status == 1 && fuseflag==0)
+		{
+			fuseflag=1;
 		}
 		if(Rx_Data.Fuse_Status == 1)
 			FFFlag = 0;		
@@ -288,15 +353,15 @@ else if (RxID == Power_Rx_ID1)
 {
 	if(data_rx[0] == 0x12)
 	{		
-		Rx_Data.Rx_Data0 = data_rx[0];
 		Rx_Data.BT48V_Cell1 = (data_rx[1] <<8) + data_rx[2];
 		Rx_Data.BT48V_Cell2 = (data_rx[3] <<8) + data_rx[4];
-		Rx_Data.BT48V = (data_rx[5] <<8) + data_rx[6];
+		Rx_Data.BT48V = (data_rx[5] <<8) + data_rx[6];      
 		if(FFFlag == 0)
 		{
 			if (flagP1)
 			{
 				flagP1 = 0;
+
 				RGBLED_ColorSET(2,Pwr_RX_Color);
 			}
 			else
@@ -312,7 +377,6 @@ else if (RxID == Power_Rx_ID2)
 {
 	if(data_rx[0] == 0x15 )
 	{	
-		Rx_Data.Rx_Data0 = data_rx[0];
 		Rx_Data.General_Key = data_rx[1];
 		Rx_Data.Vision_Reset = data_rx[2];
 		Rx_Data.IR1 = data_rx[3];      

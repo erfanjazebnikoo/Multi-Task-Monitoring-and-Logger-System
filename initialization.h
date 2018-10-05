@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.9 - MMC
-* Date    : 05/19/2011
+* Version : V1.0
+* Date    : 06/29/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -11,38 +11,31 @@
 #ifndef _INITIALIZATION_H
 #define _INITIALIZATION_H
 
-#include "CAN.h" 
-//#include "type.h"
-#include "delay.h"
-#include <RTL.h>                      /* RTL kernel functions & defines      */
+#include "driver/can.h" 
+#include "util/type.h"
+#include "util/delay.h"
 #include <stdio.h>                    /* standard I/O .h-file                */
 #include <ctype.h>                    /* character functions                 */
 #include <string.h>                   /* string and memory functions         */
 #include "LPC23xx.h"
-#include "File_Config.h"
-#include "SD_File.h"	  
-#include "KS0108.h"
+#include "driver/ks0108.h"
 #include <stdint.h>                             /* Include standard types */                      
-#include "Tab.h"
-#include "tc_ad7843_v1_00.h"
-#include "app_config.h"
+#include "util/tab.h"
+#include "driver/tc_ad7843_v1_00.h"
 #include "pic1_glcd.h"
-#include "Logger.h"
-#include "rgbled.h"
-#include "Network.h"
-#include "irq.h"
+#include "app_config.h"
+#include "util/rgb_led.h"
+#include "util/network.h"
+#include "util/irq.h"
 #include <math.h>                               /* LPC1766 CAN adaption layer */
-#ifdef RT_AGENT
-#include "RT_Agent.h"                           /* Real-Time Agent definitions */
-#endif
 
 #define Power_ID		0x20
 #define Kicker_ID		0x30
 #define Handeling_ID	0x40
-#define BEEP 			0x18
+#define BEEP 			0x16
 #define Kicker_EN		0xCE
 #define Handeling_EN	0xEE
-#define Kicker_Pwr	15000	
+#define Kicker_Pwr	10000	
 #define Handeling_Spd_CW	250
 #define Handeling_Spd_CCW	-250
 
@@ -80,7 +73,6 @@
 
 extern int CounterFlag;
 extern char clock[30],date[30];
-extern int year,month,day,hour,min,sec;
 
 void IO_Init (void);
 void card_Init (void);
@@ -94,6 +86,5 @@ void Welcome(void);
 void FlagCounter(void) __irq;
 void ReadRTC(void) __irq;
 void Paint (void);
-void Hex_Str (unsigned char hex, char *str);
 
 #endif

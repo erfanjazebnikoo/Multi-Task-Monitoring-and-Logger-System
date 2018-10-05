@@ -427,62 +427,82 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>SourceCode</GroupName>
+          <GroupName>src</GroupName>
           <Files>
             <File>
-              <FileName>Main.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Main.c</FilePath>
-            </File>
-            <File>
-              <FileName>Tab.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Tab.c</FilePath>
+              <FilePath>.\main.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Driver</GroupName>
+          <GroupName>driver</GroupName>
           <Files>
-            <File>
-              <FileName>CAN.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CAN.c</FilePath>
-            </File>
             <File>
               <FileName>initialization.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\initialization.c</FilePath>
             </File>
             <File>
-              <FileName>KS0108.c</FileName>
+              <FileName>can.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\KS0108.c</FilePath>
+              <FilePath>.\driver\can.c</FilePath>
             </File>
             <File>
-              <FileName>KS0108-LPC.c</FileName>
+              <FileName>ks0108.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\KS0108-LPC.c</FilePath>
+              <FilePath>.\driver\ks0108.c</FilePath>
+            </File>
+            <File>
+              <FileName>ks0108-LPC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\driver\ks0108-LPC.c</FilePath>
             </File>
             <File>
               <FileName>spi_lpc23xx_v1_01.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\spi_lpc23xx_v1_01.c</FilePath>
+              <FilePath>.\driver\spi_lpc23xx_v1_01.c</FilePath>
             </File>
             <File>
               <FileName>tc_ad7843_v1_00.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\tc_ad7843_v1_00.c</FilePath>
+              <FilePath>.\driver\tc_ad7843_v1_00.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>util</GroupName>
+          <Files>
+            <File>
+              <FileName>graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\util\graphics.c</FilePath>
             </File>
             <File>
-              <FileName>Delay.c</FileName>
+              <FileName>rgb_led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Delay.c</FilePath>
+              <FilePath>.\util\rgb_led.c</FilePath>
             </File>
             <File>
-              <FileName>graphic.c</FileName>
+              <FileName>tab.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\graphic.c</FilePath>
+              <FilePath>.\util\tab.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\util\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\util\irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>network.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\util\network.c</FilePath>
             </File>
           </Files>
         </Group>
