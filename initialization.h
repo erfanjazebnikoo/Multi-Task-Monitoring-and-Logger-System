@@ -5,22 +5,22 @@
 #include "CAN.h" 
 #include "type.h"
 #include "delay.h"
-//#include <RTL.h>                      /* RTL kernel functions & defines      */
+#include <RTL.h>                      /* RTL kernel functions & defines      */
 #include <stdio.h>                    /* standard I/O .h-file                */
 #include <ctype.h>                    /* character functions                 */
 #include <string.h>                   /* string and memory functions         */
 #include "LPC23xx.h"
-//#include "File_Config.h"
-//#include "SD_File.h"
+#include "File_Config.h"
+#include "SD_File.h"
 #include "KS0108.h"
 #include <stdint.h>                             /* Include standard types */                      
 #include "Tab.h"
 #include "tc_ad7843_v1_00.h"
 #include "app_config.h"
 #include <math.h>                               /* LPC1766 CAN adaption layer */
-//#ifdef RT_AGENT
-//#include "RT_Agent.h"                           /* Real-Time Agent definitions */
-//#endif
+#ifdef RT_AGENT
+#include "RT_Agent.h"                           /* Real-Time Agent definitions */
+#endif
 
 #endif
 

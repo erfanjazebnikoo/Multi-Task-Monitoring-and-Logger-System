@@ -26,52 +26,20 @@ void Hex_Str (unsigned char hex, char *str) {
  *        Main: 
  *---------------------------------------------------------------------------*/
 int main (void) {
- int x,y; 
- char bmp = 'D';
-   unsigned int val_Tx = 0, val_Rx = 0;
-unsigned int rxid = 0;
+
 main_init();
 
 GLCD_ClearScreen();
-
+//
+//  CAN_TxMsg[1].id = 32;                           /* initialise message to send */
+//  for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
+//  CAN_TxMsg[1].len = 1;
+//  CAN_TxMsg[1].format = STANDARD_FORMAT;
+//  CAN_TxMsg[1].type = DATA_FRAME;
 
 while(1){
 
-//for(y=0;y<64;y++){
-//	for(x=0;x<128;x++)
-//		GLCD_SetPixel(x,y,0);
-//}
-
-
-GLCD_Bitmap(&bmp,80,40,20,20);
-
-
-//
-//  CAN_TxMsg[1].id = 1;                           /* initialise message to send */
-//  for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-//  CAN_TxMsg[1].len = 1;
-//  CAN_TxMsg[1].format = STANDARD_FORMAT;
-//  CAN_TxMsg[1].type = DATA_FRAME;
-//	
-//
-//	val_Tx=7;
-//     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-//      CAN_TxRdy[1] = 0;
-//
-//      CAN_TxMsg[1].data[0] = val_Tx;             /* data[0] field = ADC value */
-//      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
-//    }
-//
-//	delay_ms(50);
-//
-//  CAN_TxMsg[1].id = 2;                           /* initialise message to send */
-//  for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-//  CAN_TxMsg[1].len = 1;
-//  CAN_TxMsg[1].format = STANDARD_FORMAT;
-//  CAN_TxMsg[1].type = DATA_FRAME;
-//	
-//
-//	val_Tx=20;
+//	val_Tx=30;
 //     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
 //      CAN_TxRdy[1] = 0;
 //
@@ -80,72 +48,36 @@ GLCD_Bitmap(&bmp,80,40,20,20);
 //    }
 //
 //    delay_ms (10); 
-
-//CAN_TxMsg[1].id = 35;                           /* initialise message to send */
-//  for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-//  CAN_TxMsg[1].len = 1;
-//  CAN_TxMsg[1].format = STANDARD_FORMAT;
-//  CAN_TxMsg[1].type = DATA_FRAME;
-//	
 //
-//	val_Tx=24;
-//     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-//      CAN_TxRdy[1] = 0;
-//
-//      CAN_TxMsg[1].data[0] = val_Tx;             /* data[0] field = ADC value */
-//      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
-//    }
-//
-//    delay_ms (500);
-
-//	val_Tx=23;
-//     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-//      CAN_TxRdy[1] = 0;
-//
-//      CAN_TxMsg[1].data[0] = val_Tx;             /* data[0] field = ADC value */
-//      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
-//    }
-//
-//    delay_ms (500);
-
-		if (CAN_RxRdy[0]) {                           /* rc message on CAN Controller #1 */
-      CAN_RxRdy[0] = 0;
-	  val_Rx = CAN_RxMsg[0].data[0];
-	  rxid = CAN_RxMsg[0].id;
-   }
-
 //Multi_Tasking();
 
-//Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
+
 //GLCD_GoTo(0,4);
-//GLCD_WriteString("|    Calibration    |");
-//GLCD_GoTo(0,5);
-//GLCD_WriteString("|-------------------|");
-//GLCD_GoTo(0,6);
 //GLCD_WriteString("| Monitoring System |");
 //
-////if(TCIsPenOn())
-////Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
-////else
-////Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
+//if(TCIsPenOn())
+//Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
+//else
+//Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
 //if(TCIsPenOn()){
 //TCRead();
-//	x = TCGetX()/(26.8)-12; 
-//	y = TCGetY()/(46.4)-12;	
+//	x = (TCGetX() - 220) / 28;
+//	y = (TCGetY() - 500) / 45;	
 //}
 //else{
 //	x = 0;
 //	y = 0;
 //}
 //
-//sprintf(Touch_X,"X: %04d",x);
-//sprintf(Touch_Y,"Y: %04d",y);
+//sprintf(Touch_X,"X: %03d",x);
+//sprintf(Touch_Y,"Y: %03d",y);
 //
 //GLCD_GoTo(0,0);
 //GLCD_WriteString(Touch_X);
 //GLCD_GoTo(0,2);
 //GLCD_WriteString(Touch_Y);
-
+GLCD_GoTo(0,0);
+GLCD_WriteString("Test");
  }
 }
 /*----------------------------------------------------------------------------

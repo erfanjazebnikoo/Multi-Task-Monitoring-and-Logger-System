@@ -3,7 +3,6 @@
 
 int z;
 int h=1;
-int counter = 0;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -212,7 +211,6 @@ GLCD_WriteString("+---");
 void Kicker (int In_Vol , int Cap_Vol , int Motor_Current , int Charge_Status ,
 		  int Kicker_Status , int *Kick , int *Change_State , int *Kicker_Power){
 char inv[20],capv[20],mtc[20],chs[20],ks[20];
-
 sprintf(inv,"IN_V: %03dV",In_Vol);
 sprintf(capv,"CAP_V: %03dV",Cap_Vol);
 sprintf(mtc,"MT_Cur: %03dA",Motor_Current);
@@ -274,8 +272,6 @@ GLCD_GoTo(80,4);
 GLCD_WriteString("|E/D");
 GLCD_GoTo(80,5);
 GLCD_WriteString("+---");
-
-
 }
  
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -283,8 +279,7 @@ GLCD_WriteString("+---");
 void Power (int BT48V_Cell1 , int BT48V_Cell2 , int BT48V_Total , int BT24V ,
         	int IR1 , int IR2 , int Vision_Reset , int General_Key ,
 			int BT48_Curr , int BT24_Curr , int *Beep){
-int k,j;
-unsigned int val_Tx = 0, val_Rx = 0;
+
 char c_48[20],t_48_24[20],ir[20],vs[20],b48c[20],b24c[20];
 sprintf(c_48,"C1:%03d C2:%03d",BT48V_Cell1,BT48V_Cell2);
 sprintf(t_48_24,"48:%03d 24:%03d",BT48V_Total,BT24V);
@@ -352,27 +347,6 @@ sprintf(b24c,"BT24_C: %03dA",BT24_Curr);
 	GLCD_GoTo(80,5);
 	GLCD_WriteString("    ");
 
-
-//CAN_TxMsg[1].id = 35;                           /* initialise message to send */
-//  for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-//  CAN_TxMsg[1].len = 1;
-//  CAN_TxMsg[1].format = STANDARD_FORMAT;
-//  CAN_TxMsg[1].type = DATA_FRAME;
-//	
-//
-//	val_Tx=11;
-//     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-//      CAN_TxRdy[1] = 0;
-//
-//      CAN_TxMsg[1].data[0] = val_Tx;             /* data[0] field = ADC value */
-//      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
-//    }
-//
-//    delay_ms (10);
-
-
-
-
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -381,8 +355,8 @@ int Push_Touch (int x1 , int x2 , int y1 , int y2){
 int Touch_X,Touch_Y;
 if(TCIsPenOn()){
 TCRead();
-	Touch_X = TCGetX()/(26.8)-12; 
-	Touch_Y = TCGetY()/(46.4)-12;	
+	Touch_X = (TCGetX() - 220) / 28;
+	Touch_Y = (TCGetY() - 500) / 45;
 }
 else{
 	Touch_X = 0;
@@ -402,19 +376,50 @@ return(0);
 
 void Multi_Tasking (void){
 
-int m,n,p,beep,j;
-char k2[30];
+int m,n,p;
 //char b[20];
 static int k = 8;
 static int flag;
 unsigned int val_Tx = 0, val_Rx = 0;
 unsigned int rxid;
 
-	if (CAN_RxRdy[0]) {                           /* rc message on CAN Controller #1 */
-      CAN_RxRdy[0] = 0;
-	  val_Rx = CAN_RxMsg[0].data[0];
-	  rxid = CAN_RxMsg[0].id;
-   }
+int x,y;
+char Touch_X[40],Touch_Y[40];
+
+//if(!TCIsPenOn()){
+//flag = 0;
+//}
+//if(flag == 0 && TCIsPenOn()){
+////BackLight(1);
+//if (FIO2PIN & (1<<0))
+//Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
+//else
+//Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
+//flag = 1;
+//}
+//if(TCIsPenOn()){
+//TCRead();
+//	x = (TCGetX() - 220) / 28;
+//	y = (TCGetY() - 500) / 45;
+//}
+//else{
+//	x = 0;
+//	y = 0;
+//}	
+//
+//sprintf(Touch_X,"X: %03d",x);
+//sprintf(Touch_Y,"Y: %03d",y);
+//
+//GLCD_GoTo(0,0);
+//GLCD_WriteString(Touch_X);
+//GLCD_GoTo(0,2);
+//GLCD_WriteString(Touch_Y);
+
+//	if (CAN_RxRdy[0]) {                           /* rc message on CAN Controller #1 */
+//      CAN_RxRdy[0] = 0;
+//	  val_Rx = CAN_RxMsg[0].data[0];
+//	  rxid = CAN_RxMsg[0].id;
+//   }
 
 		
 delay_ms(10);
@@ -423,22 +428,18 @@ delay_ms(10);
 if(k == 1)
 	{
 	Handling_Left (0,0,0,&m,&n,&p);
-	counter = k;
 	}
 else if(k == 2)
 	{
 	Handling_Right (0,0,0,&m,&n,&p);
-	counter = k;
 	}
 else if(k == 3)
 	{
 	Kicker (0,0,0,0,0,&m,&n,&p);
-	counter = k;
 	}
 else if(k == 4)
 	{
-	Power (0,0,0,0,0,0,0,0,0,0,&beep);
-	counter = k;
+	Power (0,0,0,0,0,0,0,0,0,0,&m);
 	}
 else if (k == 8)
 	{
@@ -453,7 +454,6 @@ else if (k == 8)
 		GLCD_GoTo(31,7);
 	    GLCD_WriteString(" |BCKL: OFF|");
 		}
-		counter = k;
 	}
 else if (k == 9)
 	{
@@ -471,99 +471,7 @@ else if (k == 9)
 	    GLCD_WriteString(" |BCKL: OFF|");
 		flag = 0;
 		}
-		counter = k;
 	}
-else if(k == 5)
-	{
-	if(counter == 4){
-
-	CAN_TxMsg[1].id = 35;                           /* initialise message to send */
-  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-  	CAN_TxMsg[1].len = 1;
-  	CAN_TxMsg[1].format = STANDARD_FORMAT;
-  	CAN_TxMsg[1].type = DATA_FRAME;
-	
-
-     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-      CAN_TxRdy[1] = 0;
-
-      CAN_TxMsg[1].data[0] = 24;             /* data[0] field = ADC value */
-      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
-    
-	}
-    delay_ms (500);
-	
-	}
-	else if(counter== 3){
-
- CAN_TxMsg[1].id = 35;                           /* initialise message to send */
-  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-  	CAN_TxMsg[1].len = 1;
-  	CAN_TxMsg[1].format = STANDARD_FORMAT;
-  	CAN_TxMsg[1].type = DATA_FRAME;
-	
-
-     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-      CAN_TxRdy[1] = 0;
-
-      CAN_TxMsg[1].data[0] = 24;             /* data[0] field = ADC value */
-      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
-    
-	}
-    delay_ms (500);
-	CAN_TxMsg[1].id = 35;                           /* initialise message to send */
-  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-  	CAN_TxMsg[1].len = 1;
-  	CAN_TxMsg[1].format = STANDARD_FORMAT;
-  	CAN_TxMsg[1].type = DATA_FRAME;
-	
-
-     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-      CAN_TxRdy[1] = 0;
-
-      CAN_TxMsg[1].data[0] = 24;             /* data[0] field = ADC value */
-      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
-    
-	}
-    delay_ms (500);
-	CAN_TxMsg[1].id = 35;                           /* initialise message to send */
-  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-  	CAN_TxMsg[1].len = 1;
-  	CAN_TxMsg[1].format = STANDARD_FORMAT;
-  	CAN_TxMsg[1].type = DATA_FRAME;
-	
-
-     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-      CAN_TxRdy[1] = 0;
-
-      CAN_TxMsg[1].data[0] = 24;             /* data[0] field = ADC value */
-      CAN_wrMsg (2, &CAN_TxMsg[1]);               /* transmit message */
-    
-	}
-    delay_ms (500);
-
-	 CAN_TxMsg[1].id = 0x30;                           /* initialise message to send */
-  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
-  	CAN_TxMsg[1].len = 3;
-  	CAN_TxMsg[1].format = STANDARD_FORMAT;
-  	CAN_TxMsg[1].type = DATA_FRAME;
-	
-
-     if (CAN_TxRdy[1]) {                           /* tx message on CAN Controller #2 */
-      CAN_TxRdy[1] = 0;
-
-      CAN_TxMsg[1].data[0] = 206;             /* data[0] field = ADC value */
-	  CAN_TxMsg[1].data[1] = 97;
-	  CAN_TxMsg[1].data[2] = 168;
-      CAN_wrMsg (2, &CAN_TxMsg[1]);
-
-	}
-	}
-	}
-sprintf(k2,"K: %01d C: %01d",k,counter);
-GLCD_GoTo(0,6);
-GLCD_WriteString(k2);
-
 k = Key_Read();
 
 }
@@ -612,14 +520,14 @@ PWR_Btn.Y2 = 16;
 Back_Btn.X1 = 0;
 Back_Btn.X2 = 31;
 Back_Btn.Y1 = 0;
-Back_Btn.Y2 = 12;
+Back_Btn.Y2 = 6;
 
 /////////////////////////////////////////////
 
 BCKL_Btn.X1 = 39;
 BCKL_Btn.X2 = 99;
 BCKL_Btn.Y1 = 0;
-BCKL_Btn.Y2 = 12;
+BCKL_Btn.Y2 = 6;
 
 /////////////////////////////////////////////  	
 /////////////////////////////////////////////

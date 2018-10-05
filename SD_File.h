@@ -24,17 +24,15 @@ typedef struct scmd {
 } SCMD;
 
 /* External functions */
-extern BOOL getline (char *, U32);
-extern void init_serial (void);
-extern int  getkey (void);
+//extern BOOL getline (char *, U32);
+//extern void init_serial (void);
+//extern int  getkey (void);
 
 
 #ifdef RT_AGENT
  #include "RT_Agent.h"
  #define init_comm      RTA_Init
  #define getkey         RTA_TermGetChar
-#else
- #define init_comm      init_serial
 #endif
 
 /*----------------------------------------------------------------------------
