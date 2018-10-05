@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.6
-* Date    : 03/30/2011
+* Version : V0.7
+* Date    : 04/19/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -17,6 +17,7 @@ BOOL append=0;
 char Temp[40];
 U32 TimeTemp;
 char fname[40];
+long addr,DateAddr,TimeAddr;
 
 /*------------------------------------------------------------------------------
   convert one byte to string in hexadecimal notation
@@ -46,12 +47,22 @@ int main (void) {
 
 main_init();
 GLCD_ClearScreen();						
-Welcome();
+//Welcome();
+DATESTRING        /* Create a local copy of the date */
+TIMESTRING        /* Create a local copy of the time */
+DATETIME_NOWARN   /* Avoid Compiler Warnings */
+
 for(;;){
 
-	Can_Rx();
-	Multi_Tasking();
-	Can_Tx (SendToCan());
+for (addr = DateAddr; _rbyte(addr) != 0; addr++)
+printf ("%c", _rbyte(addr));
+
+for (addr = TimeAddr; _rbyte(addr) != 0; addr++)
+  printf ("%c", _rbyte(addr));
+
+//	Can_Rx();
+//	Multi_Tasking();
+//	Can_Tx (SendToCan());
 
 
  }

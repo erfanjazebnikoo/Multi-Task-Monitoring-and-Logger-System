@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.6
-* Date    : 03/30/2011
+* Version : V0.7
+* Date    : 04/19/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -34,6 +34,18 @@
 //#ifdef RT_AGENT
 //#include "RT_Agent.h"                           /* Real-Time Agent definitions */
 //#endif
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////// Time Config /////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+#define DATESTRING static volatile unsigned char code DateString [] = __DATE__;
+#define TIMESTRING static volatile unsigned char code TimeString [] = __TIME__;
+
+#define DATETIME_NOWARN  DateString[0];TimeString[0];
+
+///////////////////////////////////////////////////////////////////
 
 #define Power_ID		0x20
 #define Kicker_ID		0x30

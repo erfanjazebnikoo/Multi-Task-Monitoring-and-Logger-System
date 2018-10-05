@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.6
-* Date    : 03/30/2011
+* Version : V0.7
+* Date    : 04/19/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -218,6 +218,7 @@ GLCD_SetPixel(Touch_X, -Touch_Y, 1);
 
 void Welcome (void)
 {
+
 	GLCD_Bitmap(my_pic,1,0,126,64);
 	GLCD_GoTo(0,6);
 	GLCD_WriteString("Multi-Task-Monitoring");
@@ -230,6 +231,7 @@ void Welcome (void)
 	GLCD_WriteString("    2010 - 2011      ");
 	delay_ms(1500);
 	GLCD_ClearScreen();
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////
