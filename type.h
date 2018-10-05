@@ -1,106 +1,38 @@
-/*****************************************************************************\
-*              efs - General purpose Embedded Filesystem library              *
-*          ---------------------------------------------------------          *
-*                                                                             *
-* Filename :  types.h                                                         *
-* Description : This file contains the crossplatform data types               *
-*                                                                             *
-* This program is free software; you can redistribute it and/or               *
-* modify it under the terms of the GNU General Public License                 *
-* as published by the Free Software Foundation; version 2                     *
-* of the License.                                                             *
-                                                                              *
-* This program is distributed in the hope that it will be useful,             *
-* but WITHOUT ANY WARRANTY; without even the implied warranty of              *
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               *
-* GNU General Public License for more details.                                *
-*                                                                             *
-* As a special exception, if other files instantiate templates or             *
-* use macros or inline functions from this file, or you compile this          *
-* file and link it with other works to produce a work based on this file,     *
-* this file does not by itself cause the resulting work to be covered         *
-* by the GNU General Public License. However the source code for this         *
-* file must still be made available in accordance with section (3) of         *
-* the GNU General Public License.                                             *
-*                                                                             *
-* This exception does not invalidate any other reasons why a work based       *
-* on this file might be covered by the GNU General Public License.            *
-*                                                                             *
-*                                                    (c)2006 Lennart Yseboodt *
-*                                                    (c)2006 Michael De Nil   *
-\*****************************************************************************/
+/*****************************************************************************
+ *   type.h:  Type definition Header file for NXP LPC230x Family 
+ *   Microprocessors
+ *
+ *   Copyright(C) 2006, NXP Semiconductor
+ *   All rights reserved.
+ *
+ *   History
+ *   2006.09.01  ver 1.00    Prelimnary version, first Release
+ *
+******************************************************************************/
+#ifndef __TYPE_H__
+#define __TYPE_H__
+#include <stdio.h>
 
-/* Contributions
- *                                                    (c)2005 Marcio Troccoli *
- */
-
-#ifndef __EFS_TYPES_H__
-#define __EFS_TYPES_H__
-
-/*****************************************************************************/
-#include "config.h"
-/*****************************************************************************/
-
-#if defined(HW_ENDPOINT_LINUX)
-	typedef char eint8;
-	typedef signed char esint8;
-	typedef unsigned char euint8;
-	typedef short eint16;
-	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef long eint32; 
-	typedef signed long esint32;
-	typedef unsigned long euint32;
-#elif defined(HW_ENDPOINT_LINUX64)
-	typedef char eint8;
-	typedef signed char esint8;
-	typedef unsigned char euint8;
-	typedef short eint16;
-	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef int eint32; 
-	typedef signed int esint32;
-	typedef unsigned int euint32;
-#elif defined (HW_ENDPOINT_ATMEGA128_SD)
-	typedef char eint8;
-	typedef signed char esint8;
-	typedef unsigned char euint8;
-	typedef short eint16;
-	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef long eint32; 
-	typedef signed long esint32;
-	typedef unsigned long euint32; 
-#elif defined(HW_ENDPOINT_DSP_TI6713_SD)
-	typedef char eint8;
-	typedef signed char esint8;
-	typedef unsigned char euint8;
-	typedef short eint16;
-	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef int eint32; 
-	typedef signed int esint32;
-	typedef unsigned int euint32;
-#elif defined(NIOS_2)
-	typedef char eint8;
-	typedef signed char esint8;
-	typedef unsigned char euint8;
-	typedef short eint16;
-	typedef signed short esint16;
-	typedef unsigned short euint16;
-	typedef int eint32;
-	typedef signed int esint32;
-	typedef unsigned int euint32; 
-#else
-	typedef char eint8;
-	typedef signed char esint8;
-	typedef unsigned char euint8;
-	typedef short eint16;
-	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef long eint32; 
-	typedef signed long esint32;
-	typedef unsigned long euint32; 
+#ifndef NULL
+#define NULL    ((void *)0)
 #endif
 
+#ifndef FALSE
+#define FALSE   (0)
 #endif
+
+#ifndef TRUE
+#define TRUE    (1)
+#endif
+
+typedef unsigned char  U8;
+typedef signed char    S8;
+typedef unsigned short U16;
+typedef signed short   S16;
+typedef unsigned long  U32;
+typedef signed long    S32;
+typedef unsigned int   BOOL;
+
+
+
+#endif  /* __TYPE_H__ */

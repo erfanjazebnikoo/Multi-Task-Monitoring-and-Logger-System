@@ -3,6 +3,7 @@
 #ifndef _TAB_H
 #define _TAB_H
 
+
 ////////////////////// Struct ////////////////////////
 
 typedef struct{
@@ -72,6 +73,13 @@ int Beep;
 
 //////////////////////////////////////////////////////
 
+typedef struct{
+
+int D0,D1,D2,D3,D4,D5,D6,D7;
+
+}DATA;
+
+//////////////////////////////////////////////////////
 void Main_Page (int BT48V , int BT24V , int Conn_Status , int Charge_Status);
 
 void Handling_Left (int Motor_L_RPM , int Motor_L_Current , int HL_Status
@@ -92,5 +100,7 @@ int Push_Touch (int x1,int x2,int y1,int y2);
 int Button(void);
 int Key_Read(void);
 void BackLight(int counter);
+void can_Send (int ID , int Data_Length , DATA *Data);
+
 
 #endif

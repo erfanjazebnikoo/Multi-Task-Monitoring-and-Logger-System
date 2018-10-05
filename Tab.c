@@ -1,9 +1,11 @@
 #include "Tab.h"
 
+int counter = 0;
+DATA data;
+static char flagKCK;
+static char flagset;
 
-int z;
-int h=1;
-
+ 
 ////////////////////////////////////////////////////////////////////////////////////////
 
 void Main_Page (int BT48V , int BT24V , int Conn_Status , int Charge_Status){
@@ -14,21 +16,23 @@ sprintf(bt24v,"24V: %03dV",BT24V);
 sprintf(cst,"CAN_ST: %01d",Conn_Status);
 sprintf(chs,"KCk_CH: %01d",Charge_Status);
 
-//GLCD_ClearScreen();
-
 
 	GLCD_GoTo(0,0);
-	GLCD_WriteString("             ");
+	GLCD_WriteString("                ");
 	GLCD_GoTo(0,1);
-	GLCD_WriteString("             ");
+	GLCD_WriteString("                ");
 	GLCD_GoTo(0,2);
-	GLCD_WriteString("             ");
+	GLCD_WriteString("                ");
 	GLCD_GoTo(0,3);
-	GLCD_WriteString("             ");
+	GLCD_WriteString("                ");
 	GLCD_GoTo(0,4);
-	GLCD_WriteString("             ");
+	GLCD_WriteString("                ");
 	GLCD_GoTo(0,5);
-	GLCD_WriteString("             ");
+	GLCD_WriteString("                ");
+	GLCD_GoTo(0,6);
+	GLCD_WriteString("                   ");
+	GLCD_GoTo(0,7);
+	GLCD_WriteString("                ");
 
 GLCD_GoTo(0,0);
 GLCD_WriteString(bt48v);
@@ -59,9 +63,9 @@ GLCD_GoTo(0,7);
 GLCD_WriteString("      ");
 
 GLCD_GoTo(80,0);
-GLCD_WriteString("    ");
+GLCD_WriteString("|L&R");
 GLCD_GoTo(80,1);
-GLCD_WriteString("    ");
+GLCD_WriteString("+---");
 GLCD_GoTo(80,2);
 GLCD_WriteString("    ");
 GLCD_GoTo(80,3);
@@ -211,6 +215,7 @@ GLCD_WriteString("+---");
 void Kicker (int In_Vol , int Cap_Vol , int Motor_Current , int Charge_Status ,
 		  int Kicker_Status , int *Kick , int *Change_State , int *Kicker_Power){
 char inv[20],capv[20],mtc[20],chs[20],ks[20];
+
 sprintf(inv,"IN_V: %03dV",In_Vol);
 sprintf(capv,"CAP_V: %03dV",Cap_Vol);
 sprintf(mtc,"MT_Cur: %03dA",Motor_Current);
@@ -272,6 +277,8 @@ GLCD_GoTo(80,4);
 GLCD_WriteString("|E/D");
 GLCD_GoTo(80,5);
 GLCD_WriteString("+---");
+
+
 }
  
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -355,8 +362,8 @@ int Push_Touch (int x1 , int x2 , int y1 , int y2){
 int Touch_X,Touch_Y;
 if(TCIsPenOn()){
 TCRead();
-	Touch_X = (TCGetX() - 220) / 28;
-	Touch_Y = (TCGetY() - 500) / 45;
+	Touch_X = TCGetX()/(26.8)-12; 
+	Touch_Y = TCGetY()/(46.4)-12;	
 }
 else{
 	Touch_X = 0;
@@ -376,74 +383,65 @@ return(0);
 
 void Multi_Tasking (void){
 
-int m,n,p;
-//char b[20];
+int m,n,p,beep;
+int Lock_State,i=0;
+int h;
+char a[20];
 static int k = 8;
 static int flag;
-unsigned int val_Tx = 0, val_Rx = 0;
+unsigned int val_Rx = 0;
 unsigned int rxid;
 
-int x,y;
-char Touch_X[40],Touch_Y[40];
-
-//if(!TCIsPenOn()){
-//flag = 0;
-//}
-//if(flag == 0 && TCIsPenOn()){
-////BackLight(1);
-//if (FIO2PIN & (1<<0))
-//Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
-//else
-//Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
-//flag = 1;
-//}
-//if(TCIsPenOn()){
-//TCRead();
-//	x = (TCGetX() - 220) / 28;
-//	y = (TCGetY() - 500) / 45;
-//}
-//else{
-//	x = 0;
-//	y = 0;
-//}	
+if (CAN_RxRdy[0]) {                           /* rc message on CAN Controller #1 */
+      CAN_RxRdy[0] = 0;
+	  val_Rx = CAN_RxMsg[0].data[0];
+	  rxid = CAN_RxMsg[0].id;
+   }
+   if (val_Rx == 0xAF){
+   	delay_ms(1000);
+	RGBLED_ColorSET(2,Kck_RX_Color);
+	delay_ms(100);
+	RGBLED_ColorCLR(2,Kck_RX_Color);
+	GLCD_Initalize();
+	delay_ms(10);
+   }
+//   sprintf(a,"RX: %06d",val_Rx);
 //
-//sprintf(Touch_X,"X: %03d",x);
-//sprintf(Touch_Y,"Y: %03d",y);
-//
-//GLCD_GoTo(0,0);
-//GLCD_WriteString(Touch_X);
-//GLCD_GoTo(0,2);
-//GLCD_WriteString(Touch_Y);
-
-//	if (CAN_RxRdy[0]) {                           /* rc message on CAN Controller #1 */
-//      CAN_RxRdy[0] = 0;
-//	  val_Rx = CAN_RxMsg[0].data[0];
-//	  rxid = CAN_RxMsg[0].id;
-//   }
-
+//	GLCD_GoTo(0,5);
+//	GLCD_WriteString(a);	
+	
 		
 delay_ms(10);
+
+sprintf(a,"ID: %02d",rxid);
+
+	GLCD_GoTo(0,6);
+	GLCD_WriteString(a);
 
 
 if(k == 1)
 	{
 	Handling_Left (0,0,0,&m,&n,&p);
+	counter = k;
 	}
 else if(k == 2)
 	{
 	Handling_Right (0,0,0,&m,&n,&p);
+	counter = k;
 	}
 else if(k == 3)
 	{
 	Kicker (0,0,0,0,0,&m,&n,&p);
+	counter = k;
 	}
 else if(k == 4)
 	{
-	Power (0,0,0,0,0,0,0,0,0,0,&m);
+	Power (0,0,0,0,0,0,0,0,0,0,&beep);
+	counter = k;
 	}
 else if (k == 8)
 	{
-	Main_Page(val_Rx,rxid,0,0);
+	Main_Page(0,0,0,0);
 	if (FIO2PIN & (1<<0))
 		{
 		GLCD_GoTo(31,7);
@@ -454,6 +452,7 @@ else if (k == 8)
 		GLCD_GoTo(31,7);
 	    GLCD_WriteString(" |BCKL: OFF|");
 		}
+		counter = k;
 	}
 else if (k == 9)
 	{
@@ -471,7 +470,197 @@ else if (k == 9)
 	    GLCD_WriteString(" |BCKL: OFF|");
 		flag = 0;
 		}
+		counter = k;
 	}
+else if (k == 5)
+{
+		if(counter == 8)
+		//	Lock(1);
+		GLCD_Initalize();
+
+}
+
+else if (k == 6)
+{
+ 	if(counter == 3)
+		{
+			//flag=0;
+			data.D0 = Kicker_EN;
+			data.D1 = 0x00;
+			data.D2 = 0x00;
+			if (flagset)
+				{
+				data.D3 = 0x01;
+				flagset = 0;
+				}
+			else
+				{
+				data.D3 = 0x02;
+				flagset = 1;
+				}
+			RGBLED_ColorSET(1,Kck_TX_Color);
+			can_Send (Kicker_ID , 4 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,Kck_TX_Color);
+			delay_ms (1000);
+
+  		}
+
+}
+
+else if (k == 7)
+{
+ 	if(counter == 3)
+		{
+			data.D0 = 0xDE;
+			if (flagKCK)
+				{
+				data.D1 = 0x01;
+				flagKCK = 0;
+				}
+			else
+				{
+				data.D1 = 0x00;
+				flagKCK = 1;
+				}
+			RGBLED_ColorSET(1,Kck_TX_Color);
+			can_Send (Kicker_ID , 2 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,Kck_TX_Color);
+			delay_ms (1000);
+  		}
+}
+
+else if(k == 14)
+	{
+		if(counter == 4)
+		{
+	 		data.D0 = BEEP;
+			RGBLED_ColorSET(1,Pwr_TX_Color);
+			can_Send (Power_ID , 1 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,Pwr_TX_Color);
+	 		delay_ms (500);
+		}
+    
+		if(counter == 3)
+		{
+	 		data.D0 = BEEP;
+			RGBLED_ColorSET(1,Pwr_TX_Color);
+			can_Send (Power_ID , 1 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,Pwr_TX_Color);
+	 		delay_ms (500);
+			RGBLED_ColorSET(1,Pwr_TX_Color);
+			can_Send (Power_ID , 1 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,Pwr_TX_Color);
+	 		delay_ms (500);
+			RGBLED_ColorSET(1,Pwr_TX_Color);
+			can_Send (Power_ID , 1 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,Pwr_TX_Color);
+	 		delay_ms (500);
+			data.D0 = Kicker_EN;
+			data.D1 = (char)(Kicker_Pwr >>8 & 0xFF);
+			data.D2 = (char)(Kicker_Pwr & 0xFF);
+			RGBLED_ColorSET(1,Kck_TX_Color);
+			can_Send (Kicker_ID , 3 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,Kck_TX_Color);
+			delay_ms (10);
+		}
+
+		if(counter == 1)
+		{
+			data.D0 = Handeling_EN;
+			data.D1 = (char)(Handeling_Spd_CW >>8 & 0xFF);
+			data.D2 = (char)(Handeling_Spd_CW & 0xFF);
+			RGBLED_ColorSET(1,BHL_TX_Color);
+			can_Send (Handeling_ID , 5 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,BHL_TX_Color);
+			delay_ms (10);
+		}
+
+		if(counter == 2)
+		{
+		   	data.D0 = Handeling_EN;
+			data.D3 = (char)(Handeling_Spd_CW >>8 & 0xFF);
+			data.D4 = (char)(Handeling_Spd_CW & 0xFF);
+			RGBLED_ColorSET(1,BHR_TX_Color);
+			can_Send (Handeling_ID , 5 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,BHR_TX_Color);
+			delay_ms (10);
+		}
+		if(counter == 8)
+			Lock(1);
+		//GLCD_Initalize();
+	}
+
+else if(k == 15)
+	{
+
+		if(counter == 1)
+		{
+			data.D0 = Handeling_EN;
+			data.D1 = (char)(Handeling_Spd_CCW >>8 & 0xFF);
+			data.D2 = (char)(Handeling_Spd_CCW & 0xFF);
+			RGBLED_ColorSET(1,BHL_TX_Color);
+			can_Send (Handeling_ID , 5 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,BHL_TX_Color);
+			delay_ms (10);
+		}
+
+		if(counter == 2)
+		{
+		   	data.D0 = Handeling_EN;
+			data.D3 = (char)(Handeling_Spd_CCW >>8 & 0xFF);
+			data.D4 = (char)(Handeling_Spd_CCW & 0xFF);
+			RGBLED_ColorSET(1,BHR_TX_Color);
+			can_Send (Handeling_ID , 5 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,BHR_TX_Color);
+			delay_ms (10);
+		}
+		
+   }
+
+else if(k == 16)
+	{
+
+		if(counter == 1)
+		{
+			data.D0 = Handeling_EN;
+			data.D1 = 0x00;
+			data.D2 = 0x00;
+			RGBLED_ColorSET(1,BHL_TX_Color);
+			can_Send (Handeling_ID , 5 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,BHL_TX_Color);
+			delay_ms (10);
+		}
+
+		if(counter == 2)
+		{
+		   	data.D0 = Handeling_EN;
+			data.D3 = 0x00;
+			data.D4 = 0x00;
+			RGBLED_ColorSET(1,BHR_TX_Color);
+			can_Send (Handeling_ID , 5 , &data);
+			delay_ms(100);
+			RGBLED_ColorCLR(1,BHR_TX_Color);
+			delay_ms (10);
+		}
+		
+   }
+
+//sprintf(k2,"K: %01d C: %01d",k,counter);
+//GLCD_GoTo(0,6);
+//GLCD_WriteString(k2);
+
 k = Key_Read();
 
 }
@@ -520,14 +709,14 @@ PWR_Btn.Y2 = 16;
 Back_Btn.X1 = 0;
 Back_Btn.X2 = 31;
 Back_Btn.Y1 = 0;
-Back_Btn.Y2 = 6;
+Back_Btn.Y2 = 12;
 
 /////////////////////////////////////////////
 
 BCKL_Btn.X1 = 39;
 BCKL_Btn.X2 = 99;
 BCKL_Btn.Y1 = 0;
-BCKL_Btn.Y2 = 6;
+BCKL_Btn.Y2 = 12;
 
 /////////////////////////////////////////////  	
 /////////////////////////////////////////////
@@ -610,14 +799,14 @@ KeyMem = Button();
 if (KeyMem)
 	{
 	KeyLastState = KeyMem; KeyPushCounter = 0;
-	while ((KeyMem == KeyLastState)&&(KeyPushCounter < 150))
+	while ((KeyMem == KeyLastState)&&(KeyPushCounter < 50))
 		{
 		KeyLastState = KeyMem;
 		KeyMem = Button();
 		KeyPushCounter++;
 		delay_ms(10);
 		}
-	if (KeyPushCounter < 150)
+	if (KeyPushCounter < 50)
 		return (KeyLastState);
 	else
 		return (KeyLastState+9);
@@ -634,3 +823,34 @@ Setb(GLCD_BCKL_SET,GLCD_BCKL_PIN);
 else
 Clrb(GLCD_BCKL_CLR,GLCD_BCKL_PIN);
 }
+
+//////////////////////////////////////////////////////////////////////////
+
+void can_Send (int ID , int Data_Length , DATA *Data) 
+{
+
+	int j;
+	CAN_TxMsg[1].id = ID;                  
+  	for (j = 0; j < 8; j++) CAN_TxMsg[0].data[j] = 0;
+  	CAN_TxMsg[1].len = Data_Length;
+  	CAN_TxMsg[1].format = STANDARD_FORMAT;
+  	CAN_TxMsg[1].type = DATA_FRAME;
+	 
+    if (CAN_TxRdy[1]) 
+	{                          
+    	CAN_TxRdy[1] = 0;
+		CAN_TxMsg[1].data[0] = Data->D0;
+		CAN_TxMsg[1].data[1] = Data->D1;
+		CAN_TxMsg[1].data[2] = Data->D2;
+		CAN_TxMsg[1].data[3] = Data->D3;
+		CAN_TxMsg[1].data[4] = Data->D4;
+		CAN_TxMsg[1].data[5] = Data->D5;
+		CAN_TxMsg[1].data[6] = Data->D6;
+		CAN_TxMsg[1].data[7] = Data->D7;
+      	CAN_wrMsg (2, &CAN_TxMsg[1]);           
+	}
+    delay_ms (10);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
