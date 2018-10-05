@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.7
-* Date    : 04/19/2011
+* Version : V0.8
+* Date    : 05/12/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -182,13 +182,25 @@ T1MR0 	= PCLK / 1000; //1ms
 T1TCR  |= 0x01;
 T1CTCR |= 0x00;
 T1MCR  |= ((1 << 0)|(1 << 1));
+
+
+RTC_ILR = 0x03;
+RTC_CCR = (1<<4) | (1<<0);
+RTC_CIIR = 1<<0; 
+VICVectAddr13 = (unsigned long) ReadRTC; 
+VICVectCntl13 |= 0x20 | VIC_RTC; 
+VICIntSelect &= ~(1<<VIC_RTC); 
+VICIntEnable |= (1 << VIC_RTC);
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
 void CfgInterrupts (void)
 {
-install_irq( TIMER1_INT  , (void *)FlagCounter , 1);
+
+install_irq( TIMER1_INT  , (void *)FlagCounter , 2);
+
 }
 
 
@@ -238,8 +250,9 @@ void Welcome (void)
 
 void main_init (void) {
 
-CfgTabInterrupt	();
 init_VIC		();
+CfgTabInterrupt	();
+
 CfgInterrupts 	();
 
 IO_Init();
@@ -247,9 +260,9 @@ GLCD_Initalize	();
 GLCD_ClearScreen();
 RGBLED_init		();
 
-#ifdef RT_AGENT
-  RTA_Init();                                     /* Initialize Real-Time Agent  */
-#endif
+//#ifdef RT_AGENT
+//  RTA_Init();                                     /* Initialize Real-Time Agent  */
+//#endif
 
 //card_Init ();
 can_Init 		();

@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.7
-* Date    : 04/19/2011
+* Version : V0.8
+* Date    : 05/12/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -17,7 +17,13 @@ BOOL append=0;
 char Temp[40];
 U32 TimeTemp;
 char fname[40];
-long addr,DateAddr,TimeAddr;
+char clock[30],date[30];
+int year = 0;
+int month = 0;
+int day = 0;
+int hour = 0;
+int min = 0;
+int sec = 0;
 
 /*------------------------------------------------------------------------------
   convert one byte to string in hexadecimal notation
@@ -40,29 +46,65 @@ VICVectAddr = 0;		/* Acknowledge Interrupt */
 
 }
 
+
+void ReadRTC(void) __irq{
+
+
+//Clear Interrupt
+RTC_ILR |= 1;
+//Read Time registers
+hour = (RTC_CTIME0 & 0x3F0000)>>16; //MASKHR:0x1f0000
+min = (RTC_CTIME0 & 0X3F00)>>8;//MASKMIN:0X3F00
+sec = (RTC_CTIME0 & 0X3F); // MASKSEC:0X3F
+year = (RTC_CTIME1)>>16;
+month = (RTC_CTIME1 & 0X3F00)>>8;
+day = (RTC_CTIME1 & 0X3F);
+
+sprintf(clock,"Time: %02d:%02d:%02d",hour,min,sec);
+sprintf(date,"Date: %02d/%02d/%04d",month,day,year);
+
+//updateing VIC
+VICVectAddr = 0;
+
+}
+
+
 /*----------------------------------------------------------------------------
  *        Main: 
  *---------------------------------------------------------------------------*/
 int main (void) {
 
+char counter[30];
+
 main_init();
 GLCD_ClearScreen();						
-//Welcome();
-DATESTRING        /* Create a local copy of the date */
-TIMESTRING        /* Create a local copy of the time */
-DATETIME_NOWARN   /* Avoid Compiler Warnings */
-
+Welcome();
 for(;;){
 
-for (addr = DateAddr; _rbyte(addr) != 0; addr++)
-printf ("%c", _rbyte(addr));
+//GLCD_GoTo(0,0);
+//GLCD_WriteString("Clock Test");
 
-for (addr = TimeAddr; _rbyte(addr) != 0; addr++)
-  printf ("%c", _rbyte(addr));
+//sprintf(counter,"%10d",CounterFlag);
+//
+//GLCD_GoTo(0,1);
+//GLCD_WriteString(counter);
 
-//	Can_Rx();
-//	Multi_Tasking();
-//	Can_Tx (SendToCan());
+//if (CounterFlag>1000)
+//{
+//GLCD_ClearScreen();
+//GLCD_GoTo(0,0);
+//GLCD_WriteString("Clock and Date Test:");
+//GLCD_GoTo(0,2);							  
+//GLCD_WriteString(clock);
+//GLCD_GoTo(0,3);
+//GLCD_WriteString(date);
+//CounterFlag = 0;
+//}
+
+
+	Can_Rx();
+	Multi_Tasking();
+	Can_Tx (SendToCan());
 
 
  }

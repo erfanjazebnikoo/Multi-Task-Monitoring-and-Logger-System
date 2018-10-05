@@ -358,7 +358,7 @@ CCLKCFG_Val     EQU     0x00000003
 USBCLKCFG_Val   EQU     0x00000005
 PCLKSEL0_Val    EQU     0x00000000
 PCLKSEL1_Val    EQU     0x00000000
-PCONP_Val       EQU     0x00206506
+PCONP_Val       EQU     0x00206706
 
 ;----------------------- Memory Accelerator Module (MAM) Definitions -----------
 

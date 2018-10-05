@@ -1,7 +1,7 @@
 /************************************************************************
 * Project : Multi Task Monitoring and Logger System
-* Version : V0.7
-* Date    : 04/19/2011
+* Version : V0.8
+* Date    : 05/12/2011
 * Author  : Erfan Jazeb Nikoo
 * Compiler: KEIL uVision V4.01
 * Chip type           : LPC2368 NXP ARM7
@@ -25,12 +25,12 @@ BT24V = (float)BT24V/10;
 BT48V_Cell1 = (float)BT48V_Cell1/10;
 BT48V_Cell2 = (float)BT48V_Cell2/10;
 
-sprintf(bt48v,"48V: %02.01fV",BT48V);
-sprintf(bt24v,"24V: %02.01fV",BT24V);
+//sprintf(bt48v,"48V: %02.01fV",BT48V);
+sprintf(bt24v,"24V   : %02.01fV",BT24V);
 sprintf(cst,"CAN_ST: %01d",Conn_Status);
 sprintf(chs,"KCk_CH: %01d",Charge_Status);
-sprintf(c_48_1,"Cell1: %02.01fV",BT48V_Cell1);
-sprintf(c_48_2,"Cell2: %02.01fV",BT48V_Cell2);
+sprintf(c_48_1,"48V V1: %02.01fV",BT48V_Cell1);
+sprintf(c_48_2,"48V V2: %02.01fV",BT48V_Cell2);
 
 GLCD_GoTo(0,0);
 GLCD_WriteString("                   ");
@@ -49,18 +49,19 @@ GLCD_WriteString("                   ");
 GLCD_GoTo(0,7);
 GLCD_WriteString("                ");
 
-GLCD_GoTo(0,0);
-GLCD_WriteString(bt48v);
+//GLCD_GoTo(0,0);
+//GLCD_WriteString(bt48v);
 //GLCD_SetPixel(41,6,1);
-GLCD_GoTo(0,1);
+GLCD_GoTo(0,0);
 GLCD_WriteString(bt24v);
 //GLCD_SetPixel(41,14,1);
-GLCD_GoTo(0,2);
+GLCD_GoTo(0,1);
 GLCD_WriteString(c_48_1);
 //GLCD_SetPixel(47,22,1);
-GLCD_GoTo(0,3);
+GLCD_GoTo(0,2);
 GLCD_WriteString(c_48_2);
 //GLCD_SetPixel(47,30,1);
+
 
 //GLCD_GoTo(0,2);
 //GLCD_WriteString(cst);
@@ -94,10 +95,10 @@ GLCD_GoTo(80,2);
 GLCD_WriteString("    ");
 GLCD_GoTo(80,3);
 GLCD_WriteString("    ");
-GLCD_GoTo(80,4);
-GLCD_WriteString("    ");
-GLCD_GoTo(80,5);
-GLCD_WriteString("    ");
+//GLCD_GoTo(80,4);
+//GLCD_WriteString("    ");
+//GLCD_GoTo(80,5);
+//GLCD_WriteString("    ");
 
 }
 
@@ -652,6 +653,7 @@ if(counter == 4)
 }
 if(counter == 8)
 {
+
 	if (CounterFlag>300)
 	{
 		Main_Page(Rx_Data.BT48V_Cell1,Rx_Data.BT48V_Cell2,Rx_Data.BT48V,Rx_Data.Input_Vol,0,0);
@@ -665,7 +667,11 @@ if(counter == 8)
 			GLCD_GoTo(31,7);
 	    	GLCD_WriteString(" |BCKL: OFF|");
 		}
-
+		GLCD_GoTo(0,4);							  
+		GLCD_WriteString(clock);
+		GLCD_GoTo(0,5);
+		GLCD_WriteString(date);
+	
 		CounterFlag = 0;
 	}
 }        
