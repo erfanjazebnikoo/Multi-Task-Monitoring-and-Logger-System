@@ -53,7 +53,7 @@ Storage circuit and system inputs. This board designed for all input connection 
 ### 3- Pin configuration
 NXP LPC2368 has four different ports.
 
-### Port 0:
+#### Port 0:
 
 | Pin | Connection |
 | ------ | ------ |
@@ -71,7 +71,7 @@ NXP LPC2368 has four different ports.
 | 21 | MMC Driver PWR |
 | 22 | MMC Driver DATA0 |
 
-### Port 1:
+#### Port 1:
 
 | Pin | Connection |
 | ------ | ------ |
@@ -93,7 +93,7 @@ NXP LPC2368 has four different ports.
 | 23 | RGB LED 2 Green |
 | 29 | Lock Button |
 
-### Port 2:
+#### Port 2:
 
 | Pin | Connection |
 | ------ | ------ |
@@ -106,7 +106,7 @@ NXP LPC2368 has four different ports.
 | 12 | MMC Driver DATA2 |
 | 13 | MMC Driver DATA3 |
 
-### Port 4:
+#### Port 4:
 
 | Pin | Connection |
 | ------ | ------ |
