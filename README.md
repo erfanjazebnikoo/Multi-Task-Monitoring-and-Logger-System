@@ -127,5 +127,5 @@ NXP LPC2368 has four different ports.
 [network]:<https://github.com/erfanjazebnikoo/Multi-Task-Monitoring-and-Logger-System/blob/master/util/network.h>
 [can]:<https://en.wikipedia.org/wiki/CAN_bus>
 [arm]:<https://en.wikipedia.org/wiki/ARM_architecture>
-[middle]:<http://wiki.robocup.org/Middle_Size_League>
+[middle]:<https://www.robocup.org/leagues/6>
 
