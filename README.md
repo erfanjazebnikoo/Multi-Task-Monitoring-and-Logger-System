@@ -1,6 +1,7 @@
 # Multi task monitoring and logger system
 Touchscreen graphical data monitor, debugger and Logger for [CAN protocol][can] based on an [ARM-microprocessor][arm] which designed for an autonomous [middle size robot][middle].
 
+### Features
 - Display live data in the [CAN protocol][can] attached to the system in a 128*64  [graphical LCD][ks0108]
 - Store the information received for later review on the [MMC memory card][mmc]
 - [Touch control][ads7843] with an easy interface for manual settings of circuits or related systems
