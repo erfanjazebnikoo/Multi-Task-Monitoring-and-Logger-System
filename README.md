@@ -8,8 +8,8 @@ Touchscreen graphical data monitor, debugger and Logger for [CAN protocol][can] 
 - Using the [ARM Microprocessor][arm] that makes processing faster
 - Monitor several messages via RGB Leds
 
-![N|Solid](http://erfanjazebnikoo.com/downloads/Multi-Task-Monitoring-and-Logger-System-Data-LQ.jpg)
-![N|Solid](http://erfanjazebnikoo.com/downloads/Multi-Task-Monitoring-and-Logger-System-Board-LQ.jpg)
+![N|Solid](http://erfanjn.com/downloads/Multi-Task-Monitoring-and-Logger-System-Data-LQ.jpg)
+![N|Solid](http://erfanjn.com/downloads/Multi-Task-Monitoring-and-Logger-System-Board-LQ.jpg)
  
  ---------
  
@@ -38,7 +38,7 @@ Processor, touch screen control and display input circuits. This system reads th
 | Clock frequency|12.000000 MHz|
 | RTC frequency|32.768 KHz|
 
-[![N|Solid](http://erfanjazebnikoo.com/downloads/Multi-Task-Monitoring-and-Logger-System-Main-Board-LQ.jpg)](http://erfanjazebnikoo.com/downloads/Multi-Task-Monitoring-and-Logger-System-Main-Board.jpg)
+[![N|Solid](http://erfanjn.com/downloads/Multi-Task-Monitoring-and-Logger-System-Main-Board-LQ.jpg)](http://erfanjn.com/downloads/Multi-Task-Monitoring-and-Logger-System-Main-Board.jpg)
 
 ### 2- I/O board
 Storage circuit and system inputs. This board designed for all input connection like CAN, power, memory card and programmer. All of data 
@@ -49,7 +49,7 @@ Storage circuit and system inputs. This board designed for all input connection 
 | Programmer | [ULINK2][ulink]|
 
 
-[![N|Solid](http://erfanjazebnikoo.com/downloads/Multi-Task-Monitoring-and-Logger-System-IO-Board-LQ.jpg)](http://erfanjazebnikoo.com/downloads/Multi-Task-Monitoring-and-Logger-System-IO-Board.jpg)
+[![N|Solid](http://erfanjn.com/downloads/Multi-Task-Monitoring-and-Logger-System-IO-Board-LQ.jpg)](http://erfanjn.com/downloads/Multi-Task-Monitoring-and-Logger-System-IO-Board.jpg)
 
 ### 3- Pin configuration
 NXP LPC2368 has four different ports.
